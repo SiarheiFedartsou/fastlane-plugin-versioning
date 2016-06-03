@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = %q{siarhei.fedartsou@gmail.com}
 
   spec.summary       = %q{Allows to work set/get app version directly to/from Info.plist}
-  spec.homepage      = https://github.com/SiarheiFedartsou/fastlane-plugin-versioning
+  spec.homepage      = "https://github.com/SiarheiFedartsou/fastlane-plugin-versioning"
   spec.license       = "MIT"
 
   spec.files         = Dir["lib/**/*"] + %w(README.md LICENSE)
