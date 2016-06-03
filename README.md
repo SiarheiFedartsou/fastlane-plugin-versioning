@@ -39,7 +39,9 @@ increment_version_number_in_plist(
   target: 'TestTarget' # (optional)
 )
 ```
-You can also only receive the version number from plist without modifying it:
+
+### get_version_number_from_plist
+
 
 ```ruby
 version = get_version_number_from_plist(xcodeproj: "Project.xcodeproj", # optional
