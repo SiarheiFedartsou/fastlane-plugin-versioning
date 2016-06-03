@@ -14,11 +14,13 @@ fastlane add_plugin versioning
 
 ## About versioning
 
-Allows to work set/get app version directly to/from Info.plist
+Allows to work set/get app version directly to/from Info.plist.
 
 ## Actions
 
 ### increment_version_number_in_plist
+
+Increment/set version number in Info.plist of specific target. Doesn't use agvtool (unlike increment_version_number).
 
 ```ruby
 increment_version_number_in_plist # Automatically increment patch version number.
@@ -44,6 +46,7 @@ increment_version_number_in_plist(
 
 ### get_version_number_from_plist
 
+Get version number from Info.plist of specific target. Doesn't use agvtool (unlike get_version_number).
 
 ```ruby
 version = get_version_number_from_plist(xcodeproj: "Project.xcodeproj", # optional
