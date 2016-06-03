@@ -9,10 +9,7 @@ module Fastlane
          target: params[:target],
          build_configuration_name: params[:build_configuration_name])
         end
-
-        require 'pry'
-        binding.pry
-
+        
         version_number = GetInfoPlistValueAction.run(path: plist, key: 'CFBundleShortVersionString')
         # Store the number in the shared hash
         Actions.lane_context[SharedValues::VERSION_NUMBER] = version_number
