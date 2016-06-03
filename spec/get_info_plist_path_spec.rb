@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe Fastlane::Actions::GetInfoPlistPathAction do
   describe "Get Info.plist Path Integration" do
+    
     before do
       # Create test folder
       FileUtils.mkdir_p(test_path)

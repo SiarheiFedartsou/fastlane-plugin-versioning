@@ -178,6 +178,7 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    rake (10.5.0)
     representable (2.3.0)
       uber (~> 0.0.7)
     retriable (2.1.0)
@@ -265,7 +266,9 @@ DEPENDENCIES
   fastlane (>= 1.93.1)
   fastlane-plugin-versioning!
   pry
+  rake
   rspec
+  xcodeproj (~> 1.1.0)
 
 BUNDLED WITH
    1.12.4
