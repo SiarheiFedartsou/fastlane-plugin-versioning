@@ -66,6 +66,17 @@ version = get_app_store_version_number(bundle_id: 'com.apple.Numbers')
 
 ```
 
+### get_version_number_from_git_branch
+
+```ruby
+# Extracts version number from git branch name.
+# `pattern` is pattern by which version number will be find, `#` is place where action must find version number.
+# Default value is 'release-#'(for instance for branch name 'releases/release-1.5.0' will extract '1.5.0')
+version = get_version_number_from_git_branch(pattern: 'release-#')
+
+```
+
+
 ### get_info_plist_path
 
 Get a path to target's Info.plist
