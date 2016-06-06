@@ -1,0 +1,32 @@
+HTTP/1.1 200 OK
+x-apple-jingle-correlation-key: FI6MHIPVQDYJUDMRJA6T2O64YY
+x-apple-application-site: NWK
+content-disposition: attachment; filename=1.txt
+apple-originating-system: MZStoreServices
+x-apple-translated-wo-url: /WebObjects/MZStoreServices.woa/ws/wsLookup?bundleId=com.some.nonexistent.app&urlDesc=
+apple-tk: false
+x-apple-orig-url: http://itunes.apple.com/lookup?bundleId=com.some.nonexistent.app
+apple-seq: 0
+apple-timing-app: 6 ms
+x-content-type-options: nosniff
+Content-Type: text/javascript; charset=utf-8
+x-apple-application-instance: 1000773
+x-webobjects-loadaverage: 0
+x-apple-request-uuid: 2a3cc3a1-f580-f09a-0d91-483d3d3bdcc6
+Server: ATS/4.1.0
+X-Apple-ATS-Cache-Key: /17.154.42.218/80/lookup/iDevice?bundleId=com.some.nonexistent.app
+Cache-Control: no-transform, max-age=59
+Date: Mon, 06 Jun 2016 17:53:11 GMT
+Content-Length: 42
+Connection: keep-alive
+X-Apple-Partner: origin.0
+
+
+
+
+{
+ "resultCount":0,
+ "results": []
+}
+
+

@@ -14,7 +14,7 @@ fastlane add_plugin versioning
 
 ## About versioning
 
-Allows to work set/get app version directly to/from Info.plist
+Extends fastlane versioning API. Allows to set/get versions without using agvtool and make some other small tricks.
 
 ## Actions
 
@@ -51,6 +51,18 @@ version = get_version_number_from_plist(xcodeproj: "Project.xcodeproj", # option
                                         build_configuration_name: 'Release') # optional, must be specified if you have different Info.plist build settings for different build configurations
 ```
 
+### get_app_store_version_number
+
+
+```ruby
+version = get_app_store_version_number(xcodeproj: "Project.xcodeproj", # optional
+                                        target: 'TestTarget', # optional
+                                        build_configuration_name: 'Release') # optional, must be specified if you have different Info.plist build settings for different build configurations
+)
+version = get_app_store_version_number(bundle_id: 'com.apple.Numbers')
+
+```
+
 ### get_info_plist_path
 
 Get a path to target's Info.plist
@@ -58,8 +70,12 @@ Get a path to target's Info.plist
 get_info_plist_path(xcodeproj: 'Test.xcodeproj', # optional
                        target: 'TestTarget', # optional
      build_configuration_name: 'Release' # optional, must be specified if you have different Info.plist build settings for different build configurations
+
+
                        )
 ```
+
+
 
 ## Issues and Feedback
 

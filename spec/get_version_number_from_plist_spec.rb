@@ -3,19 +3,8 @@ require 'spec_helper'
 describe Fastlane::Actions::GetVersionNumberFromPlistAction do
   describe "Get Version Number from Info.plist Integration" do
 
-    let (:test_path) { "/tmp/fastlane/tests/fastlane" }
-    let (:fixtures_path) { "./spec/fixtures/plist" }
-    let (:plist_file) { "Info.plist" }
-
-    # Action parameters
-    let (:info_plist_file) { File.join(test_path, plist_file) }
-
     before do
-      FileUtils.mkdir_p(test_path)
-      source = File.join(fixtures_path, plist_file)
-      destination = File.join(test_path, plist_file)
-
-      FileUtils.cp_r(source, destination)
+      copy_info_plist_fixture
     end
 
     it "should return version number from Info.plist" do
@@ -33,7 +22,7 @@ describe Fastlane::Actions::GetVersionNumberFromPlistAction do
     end
 
     after do
-      FileUtils.rm_r(test_path)
+      remove_info_plist_fixture
     end
 
   end
