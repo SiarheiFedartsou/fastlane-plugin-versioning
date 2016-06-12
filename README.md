@@ -44,7 +44,8 @@ increment_version_number_in_plist(
 increment_version_number_in_plist(
   # specify specific version number (optional, omitting it increments patch version number)
   version_number: '2.1.1',   
-  # (optional, you must specify the path to your main Xcode project if it is not in the project root directory or you have a multiple xcodeproj's in the root directory)
+  # (optional, you must specify the path to your main Xcode project if it is not in the project root directory 
+  # or if you have multiple xcodeproj's in the root directory)
   xcodeproj: './path/to/MyApp.xcodeproj'  
   # (optional)
   target: 'TestTarget'
