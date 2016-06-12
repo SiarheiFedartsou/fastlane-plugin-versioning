@@ -59,7 +59,9 @@ Get version number from Info.plist of specific target. Doesn't use agvtool (unli
 ```ruby
 version = get_version_number_from_plist(xcodeproj: 'Project.xcodeproj', # optional
                                         target: 'TestTarget', # optional
-                                        build_configuration_name: 'Release') # optional, must be specified if you have different Info.plist build settings for different build configurations
+                                        # optional, must be specified if you have different Info.plist build settings 
+                                        # for different build configurations
+                                        build_configuration_name: 'Release')
 ```
 
 ### get_app_store_version_number
@@ -68,7 +70,9 @@ version = get_version_number_from_plist(xcodeproj: 'Project.xcodeproj', # option
 ```ruby
 version = get_app_store_version_number(xcodeproj: 'Project.xcodeproj', # optional
                                         target: 'TestTarget', # optional
-                                        build_configuration_name: 'Release') # optional, must be specified if you have different Info.plist build settings for different build configurations
+                                        # optional, must be specified if you have different Info.plist build settings 
+                                        # for different build configurations
+                                        build_configuration_name: 'Release') 
 )
 version = get_app_store_version_number(bundle_id: 'com.apple.Numbers')
 
@@ -90,11 +94,10 @@ version = get_version_number_from_git_branch(pattern: 'release-#')
 Get a path to target's Info.plist
 ```ruby
 get_info_plist_path(xcodeproj: 'Test.xcodeproj', # optional
-                       target: 'TestTarget', # optional
-     build_configuration_name: 'Release' # optional, must be specified if you have different Info.plist build settings for different build configurations
-
-
-                       )
+                    target: 'TestTarget', # optional
+                    # optional, must be specified if you have different Info.plist build settings 
+                    # for different build configurations
+                    build_configuration_name: 'Release')
 ```
 
 
