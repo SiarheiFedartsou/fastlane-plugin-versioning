@@ -25,13 +25,13 @@ Increment/set version number in Info.plist of specific target. Doesn't use agvto
 ```ruby
 increment_version_number_in_plist # Automatically increment patch version number.
 increment_version_number_in_plist(
-  bump_type: "patch" # Automatically increment patch version number
+  bump_type: 'patch' # Automatically increment patch version number
 )
 increment_version_number_in_plist(
-  bump_type: "minor" # Automatically increment minor version number
+  bump_type: 'minor' # Automatically increment minor version number
 )
 increment_version_number_in_plist(
-  bump_type: "major" # Automatically increment major version number
+  bump_type: 'major' # Automatically increment major version number
 )
 increment_version_number_in_plist(
   version_number: '2.1.1' # Set a specific version number
@@ -57,7 +57,7 @@ increment_version_number_in_plist(
 Get version number from Info.plist of specific target. Doesn't use agvtool (unlike default get_version_number).
 
 ```ruby
-version = get_version_number_from_plist(xcodeproj: "Project.xcodeproj", # optional
+version = get_version_number_from_plist(xcodeproj: 'Project.xcodeproj', # optional
                                         target: 'TestTarget', # optional
                                         build_configuration_name: 'Release') # optional, must be specified if you have different Info.plist build settings for different build configurations
 ```
@@ -66,7 +66,7 @@ version = get_version_number_from_plist(xcodeproj: "Project.xcodeproj", # option
 
 
 ```ruby
-version = get_app_store_version_number(xcodeproj: "Project.xcodeproj", # optional
+version = get_app_store_version_number(xcodeproj: 'Project.xcodeproj', # optional
                                         target: 'TestTarget', # optional
                                         build_configuration_name: 'Release') # optional, must be specified if you have different Info.plist build settings for different build configurations
 )
