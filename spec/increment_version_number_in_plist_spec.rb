@@ -15,6 +15,11 @@ describe Fastlane::Actions::IncrementVersionNumberInPlistAction do
       destination = File.join(test_path, plist_file)
 
       FileUtils.cp_r(source, destination)
+
+      fake_existing_response = File.read('./spec/fixtures/responses/numbers_lookup_response')
+      stub_request(:get, "http://itunes.apple.com/lookup?bundleId=com.apple.Numbers").to_return(fake_existing_response)
+      fake_nonexistent_response = File.read('./spec/fixtures/responses/nonexistent_lookup_response')
+      stub_request(:get, "http://itunes.apple.com/lookup?bundleId=com.some.nonexistent.app").to_return(fake_nonexistent_response)
     end
 
     def current_version
@@ -66,6 +71,15 @@ describe Fastlane::Actions::IncrementVersionNumberInPlistAction do
 
       expect(current_version).to eq("1.0.0")
       expect(Fastlane::Actions.lane_context[Fastlane::Actions::SharedValues::VERSION_NUMBER]).to eq("1.0.0")
+    end
+
+    it "should bump version using App Store version as a source" do
+      result = Fastlane::FastFile.new.parse("lane :test do
+        increment_version_number_in_plist(bump_type: 'major', version_source: 'appstore')
+      end").runner.execute(:test)
+
+      expect(current_version).to eq("3.0.0")
+      expect(Fastlane::Actions.lane_context[Fastlane::Actions::SharedValues::VERSION_NUMBER]).to eq("3.0.0")
     end
 
     after do

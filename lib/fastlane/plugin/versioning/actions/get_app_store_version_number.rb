@@ -20,7 +20,7 @@ module Fastlane
         Net::HTTP.get(uri)
 
         response = Net::HTTP.get_response(uri)
-        UI.crash!("Unexpected status code from iTunes Search API") unless response.is_a?(Net::HTTPSuccess)
+        UI.crash!("Unexpected status code from iTunes Search API") unless response.kind_of?(Net::HTTPSuccess)
         response_body = JSON.parse(response.body)
 
         UI.user_error!("Cannot find app with #{bundle_id} bundle ID in the App Store") if response_body["resultCount"] == 0
@@ -45,24 +45,24 @@ module Fastlane
                              conflicting_options: [:xcodeproj, :target, :build_configuration_name],
                              is_string: true),
 
-           FastlaneCore::ConfigItem.new(key: :xcodeproj,
-                              env_name: "FL_VERSION_NUMBER_PROJECT",
-                              description: "optional, you must specify the path to your main Xcode project if it is not in the project root directory",
-                              optional: true,
-                              conflicting_options: [:bundle_id],
-                              verify_block: proc do |value|
-                                UI.user_error!("Please pass the path to the project, not the workspace") if value.end_with? ".xcworkspace"
-                                UI.user_error!("Could not find Xcode project at path '#{File.expand_path(value)}'") if !File.exist?(value) and !Helper.is_test?
-                              end),
-           FastlaneCore::ConfigItem.new(key: :target,
-                              env_name: "FL_VERSION_NUMBER_TARGET",
-                              optional: true,
-                              conflicting_options: [:bundle_id],
-                              description: "Specify a specific target if you have multiple per project, optional"),
-           FastlaneCore::ConfigItem.new(key: :build_configuration_name,
-                              optional: true,
-                              conflicting_options: [:bundle_id],
-                              description: "Specify a specific build configuration if you have different Info.plist build settings for each configuration")
+          FastlaneCore::ConfigItem.new(key: :xcodeproj,
+                             env_name: "FL_VERSION_NUMBER_PROJECT",
+                             description: "optional, you must specify the path to your main Xcode project if it is not in the project root directory",
+                             optional: true,
+                             conflicting_options: [:bundle_id],
+                             verify_block: proc do |value|
+                               UI.user_error!("Please pass the path to the project, not the workspace") if value.end_with? ".xcworkspace"
+                               UI.user_error!("Could not find Xcode project at path '#{File.expand_path(value)}'") if !File.exist?(value) and !Helper.is_test?
+                             end),
+          FastlaneCore::ConfigItem.new(key: :target,
+                             env_name: "FL_VERSION_NUMBER_TARGET",
+                             optional: true,
+                             conflicting_options: [:bundle_id],
+                             description: "Specify a specific target if you have multiple per project, optional"),
+          FastlaneCore::ConfigItem.new(key: :build_configuration_name,
+                             optional: true,
+                             conflicting_options: [:bundle_id],
+                             description: "Specify a specific build configuration if you have different Info.plist build settings for each configuration")
         ]
       end
 

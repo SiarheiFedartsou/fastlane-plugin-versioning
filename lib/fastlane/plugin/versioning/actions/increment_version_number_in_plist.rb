@@ -5,8 +5,12 @@ module Fastlane
         if params[:version_number]
           next_version_number = params[:version_number]
         else
-          current_version = GetVersionNumberFromPlistAction.run(xcodeproj: params[:xcodeproj],
-                                                                    target: params[:target], build_configuration_name: params[:build_configuration_name])
+          case params[:version_source]
+          when "plist"
+            current_version = GetVersionNumberFromPlistAction.run(params)
+          when "appstore"
+            current_version = GetAppStoreVersionNumberAction.run(params)
+          end
 
           version_array = current_version.split(".").map(&:to_i)
           case params[:bump_type]
@@ -61,21 +65,37 @@ module Fastlane
                                        env_name: "FL_VERSION_NUMBER_VERSION_NUMBER",
                                        description: "Change to a specific version. This will replace the bump type value",
                                        optional: true),
+          FastlaneCore::ConfigItem.new(key: :bundle_id,
+                                       env_name: "FL_APPSTORE_VERSION_NUMBER_BUNDLE_ID",
+                                       description: "Bundle ID of the application",
+                                       optional: true,
+                                       conflicting_options: [:xcodeproj, :target, :build_configuration_name],
+                                       is_string: true),
           FastlaneCore::ConfigItem.new(key: :xcodeproj,
                                        env_name: "FL_VERSION_NUMBER_PROJECT",
                                        description: "optional, you must specify the path to your main Xcode project if it is not in the project root directory",
+                                       optional: true,
+                                       conflicting_options: [:bundle_id],
                                        verify_block: proc do |value|
                                          UI.user_error!("Please pass the path to the project, not the workspace") if value.end_with? ".xcworkspace"
-                                         UI.user_error!("Could not find Xcode project") unless File.exist?(value)
-                                       end,
-                                       optional: true),
+                                         UI.user_error!("Could not find Xcode project at path '#{File.expand_path(value)}'") if !File.exist?(value) and !Helper.is_test?
+                                       end),
           FastlaneCore::ConfigItem.new(key: :target,
-          env_name: "FL_VERSION_NUMBER_TARGET",
-                             optional: true,
-                             description: "Specify a specific target if you have multiple per project, optional"),
+                                       env_name: "FL_VERSION_NUMBER_TARGET",
+                                       optional: true,
+                                       conflicting_options: [:bundle_id],
+                                       description: "Specify a specific target if you have multiple per project, optional"),
           FastlaneCore::ConfigItem.new(key: :build_configuration_name,
-                             optional: true,
-                             description: "Specify a specific build configuration if you have different Info.plist build settings for each configuration")
+                                       optional: true,
+                                       conflicting_options: [:bundle_id],
+                                       description: "Specify a specific build configuration if you have different Info.plist build settings for each configuration"),
+          FastlaneCore::ConfigItem.new(key: :version_source,
+                                       optional: true,
+                                       default_value: 'plist',
+                                       verify_block: proc do |value|
+                                         UI.user_error!("Available values are 'plist' and 'appstore'") unless ['plist', 'appstore'].include? value
+                                       end,
+                                       description: "Source version to increment. Available options: plist, appstore")
         ]
       end
 

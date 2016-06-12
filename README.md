@@ -20,7 +20,7 @@ Extends fastlane versioning actions. Allows to set/get versions without using ag
 
 ### increment_version_number_in_plist
 
-Increment/set version number in Info.plist of specific target. Doesn't use agvtool (unlike increment_version_number).
+Increment/set version number in Info.plist of specific target. Doesn't use agvtool (unlike default increment_version_number).
 
 ```ruby
 increment_version_number_in_plist # Automatically increment patch version number.
@@ -36,6 +36,9 @@ increment_version_number_in_plist(
 increment_version_number_in_plist(
   version_number: '2.1.1' # Set a specific version number
 )
+increment_version_number_in_plist(
+  version_source: 'appstore' # Automatically increment patch version number. Use App Store version number as a source.
+)
 
 increment_version_number_in_plist(
   version_number: '2.1.1',                # specify specific version number (optional, omitting it increments patch version number)
@@ -46,7 +49,7 @@ increment_version_number_in_plist(
 
 ### get_version_number_from_plist
 
-Get version number from Info.plist of specific target. Doesn't use agvtool (unlike get_version_number).
+Get version number from Info.plist of specific target. Doesn't use agvtool (unlike default get_version_number).
 
 ```ruby
 version = get_version_number_from_plist(xcodeproj: "Project.xcodeproj", # optional

@@ -3,8 +3,6 @@ require 'webmock/rspec'
 
 describe Fastlane::Actions::GetAppStoreVersionNumberAction do
   describe "Get App Store Version Number Integration" do
-
-
     before do
       copy_info_plist_fixture
 
@@ -40,6 +38,5 @@ describe Fastlane::Actions::GetAppStoreVersionNumberAction do
     after do
       remove_info_plist_fixture
     end
-
   end
 end
