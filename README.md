@@ -1,4 +1,4 @@
-# fastlane-plugin-versioning `fastlane` Plugin
+# Versioning `fastlane` Plugin
 
 [![CI Status](http://img.shields.io/travis/SiarheiFedartsou/fastlane-plugin-versioning.svg?style=flat)](https://travis-ci.org/SiarheiFedartsou/fastlane-plugin-versioning)
 [![fastlane Plugin Badge](https://rawcdn.githack.com/fastlane/fastlane/master/fastlane/assets/plugin-badge.svg)](https://rubygems.org/gems/fastlane-plugin-versioning)
@@ -37,7 +37,8 @@ increment_version_number_in_plist(
   version_number: '2.1.1' # Set a specific version number
 )
 increment_version_number_in_plist(
-  version_source: 'appstore' # Automatically increment patch version number. Use App Store version number as a source.
+  # Automatically increment patch version number. Use App Store version number as a source.
+  version_source: 'appstore'
 )
 
 increment_version_number_in_plist(
