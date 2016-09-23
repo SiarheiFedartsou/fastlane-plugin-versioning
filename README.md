@@ -88,6 +88,23 @@ version = get_version_number_from_git_branch(pattern: 'release-#')
 
 ```
 
+### increment_build_number_in_plist
+
+increment_build_number_in_plist # Automatically increments build number.
+increment_build_number_in_plist(
+  build_number: 42 # set build number to 42
+)
+
+### get_build_number_from_plist
+
+Get build number from Info.plist of specific target. Doesn't use agvtool (unlike default get_build_number).
+
+```ruby
+version = get_version_number_from_plist(xcodeproj: "Project.xcodeproj", # optional
+                                        target: 'TestTarget', # optional
+                                        build_configuration_name: 'Release') # optional, must be specified if you have different Info.plist build settings for different build configurations
+```
+
 
 ### get_info_plist_path
 
