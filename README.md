@@ -90,6 +90,8 @@ version = get_version_number_from_git_branch(pattern: 'release-#')
 
 ### increment_build_number_in_plist
 
+Increment/set build number in Info.plist of specific target. Doesn't use agvtool (unlike default increment_version_number).
+
 ```ruby
 increment_build_number_in_plist # Automatically increments build number.
 increment_build_number_in_plist(
