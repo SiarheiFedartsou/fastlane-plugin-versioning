@@ -29,7 +29,7 @@ describe Fastlane::Actions::GetInfoPlistPathAction do
             target: '#{target}'
           })
         end").runner.execute(:test)
-        expect(result).to eq("bundle/Info.plist")
+        expect(result).to eq(File.join(test_path, "bundle/Info.plist"))
       end
 
       it "should detect xcodeproj in the root directory and return Info.plist path for explicitly provided target" do
@@ -38,7 +38,7 @@ describe Fastlane::Actions::GetInfoPlistPathAction do
             target: '#{target}'
           })
         end").runner.execute(:test)
-        expect(result).to eq("bundle/Info.plist")
+        expect(result).to eq(File.join(test_path, "bundle/Info.plist"))
       end
 
       it "should detect target and return its Info.plist path for explicitly provided xcodeproj" do
@@ -47,14 +47,14 @@ describe Fastlane::Actions::GetInfoPlistPathAction do
             xcodeproj: '#{xcodeproj}'
           })
         end").runner.execute(:test)
-        expect(result).to eq("bundle/Info.plist")
+        expect(result).to eq(File.join(test_path, "bundle/Info.plist"))
       end
 
       it "should detect xcodeproj in the root directory and target and return its Info.plist path" do
         result = Fastlane::FastFile.new.parse("lane :test do
           get_info_plist_path
         end").runner.execute(:test)
-        expect(result).to eq("bundle/Info.plist")
+        expect(result).to eq(File.join(test_path, "bundle/Info.plist"))
       end
     end
 
@@ -75,7 +75,7 @@ describe Fastlane::Actions::GetInfoPlistPathAction do
             build_configuration_name: 'Debug'
           })
         end").runner.execute(:test)
-        expect(result).to eq("get_info_plist_path/Info_Debug.plist")
+        expect(result).to eq(File.join(test_path, "get_info_plist_path/Info_Debug.plist"))
 
         # it will also check an $(SRCROOT) substitution
         result = Fastlane::FastFile.new.parse("lane :test do
@@ -85,7 +85,7 @@ describe Fastlane::Actions::GetInfoPlistPathAction do
             build_configuration_name: 'Release'
           })
         end").runner.execute(:test)
-        expect(result).to eq("/tmp/fastlane/tests/fastlane/get_info_plist_path/Info_Release.plist")
+        expect(result).to eq(File.join(test_path, "get_info_plist_path/Info_Release.plist"))
       end
 
       it "should raise error if :build_configuration_name is not provided" do

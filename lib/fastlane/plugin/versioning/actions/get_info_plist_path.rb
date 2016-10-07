@@ -2,6 +2,7 @@ module Fastlane
   module Actions
     class GetInfoPlistPathAction < Action
       require 'xcodeproj'
+      require 'pathname'
 
       def self.run(params)
         unless params[:xcodeproj]
@@ -36,7 +37,12 @@ module Fastlane
           end
         end
 
-        plist.gsub('$(SRCROOT)', project.path.parent.to_path)
+        path = plist.gsub('$(SRCROOT)', project.path.parent.to_path)
+        unless (Pathname.new path).absolute?
+          path = File.join(project.path.parent.to_path, path)
+        end
+
+        path
       end
 
       #####################################################

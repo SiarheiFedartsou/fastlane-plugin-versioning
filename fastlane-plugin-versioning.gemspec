@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.author        = %q{Siarhei Fiedartsou}
   spec.email         = %q{siarhei.fedartsou@gmail.com}
 
-  spec.summary       = %q{Allows to work set/get app version directly to/from Info.plist}
+  spec.summary       = %q{Allows to set/get app version and build number directly to/from Info.plist}
   spec.homepage      = "https://github.com/SiarheiFedartsou/fastlane-plugin-versioning"
   spec.license       = "MIT"
 
