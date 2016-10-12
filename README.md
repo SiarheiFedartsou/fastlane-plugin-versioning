@@ -104,7 +104,7 @@ increment_build_number_in_plist(
 Get build number from Info.plist of specific target. Doesn't use agvtool (unlike default get_build_number).
 
 ```ruby
-version = get_version_number_from_plist(xcodeproj: "Project.xcodeproj", # optional
+version = get_build_number_from_plist(xcodeproj: "Project.xcodeproj", # optional
                                         target: 'TestTarget', # optional
                                         build_configuration_name: 'Release') # optional, must be specified if you have different Info.plist build settings for different build configurations
 ```
