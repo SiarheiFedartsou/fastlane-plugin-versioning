@@ -15,6 +15,8 @@ fastlane add_plugin versioning
 ## About versioning
 
 Extends fastlane versioning actions. Allows to set/get versions without using agvtool and do some other small tricks.
+Note that since version 0.2.6 all targets that you pass to actions like `increment_version_number_in_plist` or `get_info_plist_path` must be shared.
+To make your target shared go to "Manage schemes" in Xcode and tich "Shared" checkbox near your scheme.
 
 ## Actions
 
