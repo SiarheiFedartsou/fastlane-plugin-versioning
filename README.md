@@ -1,6 +1,6 @@
 # Versioning `fastlane` Plugin
 
-[![CI Status](http://img.shields.io/travis/SiarheiFedartsou/fastlane-plugin-versioning.svg?style=flat)](https://travis-ci.org/SiarheiFedartsou/fastlane-plugin-versioning)
+[![CI Status](https://travis-ci.org/SiarheiFedartsou/fastlane-plugin-versioning.svg?branch=master)
 [![fastlane Plugin Badge](https://rawcdn.githack.com/fastlane/fastlane/master/fastlane/assets/plugin-badge.svg)](https://rubygems.org/gems/fastlane-plugin-versioning)
 
 
