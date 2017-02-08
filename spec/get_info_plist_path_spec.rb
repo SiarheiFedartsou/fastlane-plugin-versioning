@@ -87,19 +87,6 @@ describe Fastlane::Actions::GetInfoPlistPathAction do
         end").runner.execute(:test)
         expect(result).to eq(File.join(test_path, "get_info_plist_path/Info_Release.plist"))
       end
-
-      it "should raise error if :build_configuration_name is not provided" do
-        error_msg = "Cannot resolve Info.plist build setting. Maybe you should specify :build_configuration_name?"
-
-        expect do
-          result = Fastlane::FastFile.new.parse("lane :test do
-            get_info_plist_path ({
-              xcodeproj: '#{xcodeproj}',
-              target: '#{target}'
-            })
-          end").runner.execute(:test)
-        end.to raise_error(error_msg)
-      end
     end
 
     after do
