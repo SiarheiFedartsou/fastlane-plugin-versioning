@@ -15,8 +15,8 @@ fastlane add_plugin versioning
 ## About versioning
 
 Extends fastlane versioning actions. Allows to set/get versions without using agvtool and do some other small tricks.
-Note that since version 0.2.6 all targets that you pass to actions like `increment_version_number_in_plist` or `get_info_plist_path` must be shared.
-To make your target shared go to "Manage schemes" in Xcode and tich "Shared" checkbox near your scheme.
+Note that all schemes that you pass to actions like `increment_version_number_in_plist` or `get_info_plist_path` in `scheme` parameter must be shared.
+To make your scheme shared go to "Manage schemes" in Xcode and tich "Shared" checkbox near your scheme.
 
 ## Actions
 
@@ -50,7 +50,7 @@ increment_version_number_in_plist(
   # or if you have multiple xcodeproj's in the root directory)
   xcodeproj: './path/to/MyApp.xcodeproj'  
   # (optional)
-  target: 'TestTarget'
+  target: 'TestTarget' # or `scheme`
 )
 ```
 
@@ -60,7 +60,7 @@ Get version number from Info.plist of specific target. Doesn't use agvtool (unli
 
 ```ruby
 version = get_version_number_from_plist(xcodeproj: 'Project.xcodeproj', # optional
-                                        target: 'TestTarget', # optional
+                                        target: 'TestTarget', # optional, or `scheme`
                                         # optional, must be specified if you have different Info.plist build settings
                                         # for different build configurations
                                         build_configuration_name: 'Release')
@@ -71,7 +71,7 @@ version = get_version_number_from_plist(xcodeproj: 'Project.xcodeproj', # option
 
 ```ruby
 version = get_app_store_version_number(xcodeproj: 'Project.xcodeproj', # optional
-                                        target: 'TestTarget', # optional
+                                        target: 'TestTarget', # optional, or `scheme`
                                         # optional, must be specified if you have different Info.plist build settings
                                         # for different build configurations
                                         build_configuration_name: 'Release')
@@ -107,7 +107,7 @@ Get build number from Info.plist of specific target. Doesn't use agvtool (unlike
 
 ```ruby
 version = get_build_number_from_plist(xcodeproj: "Project.xcodeproj", # optional
-                                        target: 'TestTarget', # optional
+                                        target: 'TestTarget', # optional, or `scheme`
                                         build_configuration_name: 'Release') # optional, must be specified if you have different Info.plist build settings for different build configurations
 ```
 
@@ -117,7 +117,7 @@ version = get_build_number_from_plist(xcodeproj: "Project.xcodeproj", # optional
 Get a path to target's Info.plist
 ```ruby
 get_info_plist_path(xcodeproj: 'Test.xcodeproj', # optional
-                    target: 'TestTarget', # optional
+                    target: 'TestTarget', # optional, or `scheme`
                     # optional, must be specified if you have different Info.plist build settings
                     # for different build configurations
                     build_configuration_name: 'Release')
