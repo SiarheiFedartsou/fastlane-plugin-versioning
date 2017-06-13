@@ -11,9 +11,7 @@ module Fastlane
         if Helper.test?
           plist = "/tmp/fastlane/tests/fastlane/Info.plist"
         else
-          plist = GetInfoPlistPathAction.run(xcodeproj: params[:xcodeproj],
-             target: params[:target],
-             build_configuration_name: params[:build_configuration_name])
+          plist = GetInfoPlistPathAction.run(params)
         end
 
         SetInfoPlistValueAction.run(path: plist, key: 'CFBundleVersion', value: next_build_number)
@@ -48,7 +46,13 @@ module Fastlane
           FastlaneCore::ConfigItem.new(key: :target,
                                        env_name: "FL_VERSION_NUMBER_TARGET",
                                        optional: true,
+                                       conflicting_options: [:scheme],
                                        description: "Specify a specific target if you have multiple per project, optional"),
+          FastlaneCore::ConfigItem.new(key: :scheme,
+                                       env_name: "FL_VERSION_NUMBER_SCHEME",
+                                       optional: true,
+                                       conflicting_options: [:target],
+                                       description: "Specify a specific scheme if you have multiple per project, optional"),
           FastlaneCore::ConfigItem.new(key: :build_configuration_name,
                                        optional: true,
                                        description: "Specify a specific build configuration if you have different Info.plist build settings for each configuration")

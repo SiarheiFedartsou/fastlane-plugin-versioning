@@ -15,14 +15,14 @@ module Fastlane
           version_array = current_version.split(".").map(&:to_i)
           case params[:bump_type]
           when "patch"
-            version_array[2] = version_array[2] + 1
+            version_array[2] = (version_array[2] ? version_array[2] : 0) + 1
             next_version_number = version_array.join(".")
           when "minor"
-            version_array[1] = version_array[1] + 1
+            version_array[1] = (version_array[1] ? version_array[1] : 0) + 1
             version_array[2] = version_array[2] = 0
             next_version_number = version_array.join(".")
           when "major"
-            version_array[0] = version_array[0] + 1
+            version_array[0] = (version_array[0] ? version_array[0] : 0) + 1
             version_array[1] = version_array[1] = 0
             version_array[1] = version_array[2] = 0
             next_version_number = version_array.join(".")
@@ -32,9 +32,7 @@ module Fastlane
         if Helper.test?
           plist = "/tmp/fastlane/tests/fastlane/Info.plist"
         else
-          plist = GetInfoPlistPathAction.run(xcodeproj: params[:xcodeproj],
-             target: params[:target],
-             build_configuration_name: params[:build_configuration_name])
+          plist = GetInfoPlistPathAction.run(params)
         end
 
         SetInfoPlistValueAction.run(path: plist, key: 'CFBundleShortVersionString', value: next_version_number)
@@ -69,7 +67,7 @@ module Fastlane
                                        env_name: "FL_APPSTORE_VERSION_NUMBER_BUNDLE_ID",
                                        description: "Bundle ID of the application",
                                        optional: true,
-                                       conflicting_options: [:xcodeproj, :target, :build_configuration_name],
+                                       conflicting_options: [:xcodeproj, :target, :build_configuration_name, :scheme],
                                        is_string: true),
           FastlaneCore::ConfigItem.new(key: :xcodeproj,
                                        env_name: "FL_VERSION_NUMBER_PROJECT",
@@ -83,8 +81,13 @@ module Fastlane
           FastlaneCore::ConfigItem.new(key: :target,
                                        env_name: "FL_VERSION_NUMBER_TARGET",
                                        optional: true,
-                                       conflicting_options: [:bundle_id],
+                                       conflicting_options: [:bundle_id, :scheme],
                                        description: "Specify a specific target if you have multiple per project, optional"),
+          FastlaneCore::ConfigItem.new(key: :scheme,
+                                       env_name: "FL_VERSION_NUMBER_SCHEME",
+                                       optional: true,
+                                       conflicting_options: [:bundle_id, :target],
+                                       description: "Specify a specific scheme if you have multiple per project, optional"),
           FastlaneCore::ConfigItem.new(key: :build_configuration_name,
                                        optional: true,
                                        conflicting_options: [:bundle_id],
