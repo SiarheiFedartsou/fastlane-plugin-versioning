@@ -25,11 +25,11 @@ describe Fastlane::Actions::IncrementBuildNumberInPlistAction do
 
     it "should set explicitly provided version number to Info.plist" do
       result = Fastlane::FastFile.new.parse("lane :test do
-        increment_build_number_in_plist(build_number: '4321')
+        increment_build_number_in_plist(build_number: '1.9.4.1')
       end").runner.execute(:test)
 
-      expect(current_version).to eq("4321")
-      expect(Fastlane::Actions.lane_context[Fastlane::Actions::SharedValues::BUILD_NUMBER]).to eq("4321")
+      expect(current_version).to eq("1.9.4.1")
+      expect(Fastlane::Actions.lane_context[Fastlane::Actions::SharedValues::BUILD_NUMBER]).to eq("1.9.4.1")
     end
 
     it "should increment build number by default and set it to Info.plist" do
@@ -37,8 +37,8 @@ describe Fastlane::Actions::IncrementBuildNumberInPlistAction do
         increment_build_number_in_plist
       end").runner.execute(:test)
 
-      expect(current_version).to eq("1235")
-      expect(Fastlane::Actions.lane_context[Fastlane::Actions::SharedValues::BUILD_NUMBER]).to eq("1235")
+      expect(current_version).to eq("0.9.14.2")
+      expect(Fastlane::Actions.lane_context[Fastlane::Actions::SharedValues::BUILD_NUMBER]).to eq("0.9.14.2")
     end
 
     after do

@@ -5,7 +5,10 @@ module Fastlane
         if params[:build_number]
           next_build_number = params[:build_number]
         else
-          next_build_number = (GetBuildNumberFromPlistAction.run(params).to_i + 1).to_s
+          current_build_number = GetBuildNumberFromPlistAction.run(params)
+          build_array = current_build_number.split(".").map(&:to_i)
+          build_array[-1] = build_array[-1]+1            
+          next_build_number = build_array.join(".")
         end
 
         if Helper.test?
