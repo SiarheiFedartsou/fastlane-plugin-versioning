@@ -10,14 +10,14 @@ describe Fastlane::Actions::GetBuildNumberFromPlistAction do
       result = Fastlane::FastFile.new.parse("lane :test do
         get_build_number_from_plist
       end").runner.execute(:test)
-      expect(result).to eq("1234")
+      expect(result).to eq("0.9.14.1")
     end
 
     it "should set BUILD_NUMBER shared value" do
       Fastlane::FastFile.new.parse("lane :test do
         get_build_number_from_plist
       end").runner.execute(:test)
-      expect(Fastlane::Actions.lane_context[Fastlane::Actions::SharedValues::BUILD_NUMBER]).to eq("1234")
+      expect(Fastlane::Actions.lane_context[Fastlane::Actions::SharedValues::BUILD_NUMBER]).to eq("0.9.14.1")
     end
 
     after do
