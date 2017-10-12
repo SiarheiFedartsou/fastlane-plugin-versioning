@@ -123,7 +123,15 @@ get_info_plist_path(xcodeproj: 'Test.xcodeproj', # optional
                     build_configuration_name: 'Release')
 ```
 
+### ci_build_number
 
+Get CI system build number. Determined using environment variables defined by CI systems. Supports Jenkins, Travis CI, Circle CI, TeamCity, GoCD, Bamboo, Gitlab CI and Xcode Server.
+
+```ruby
+increment_build_number_in_plist(
+  build_number: ci_build_number
+)
+```
 
 ## Issues and Feedback
 
