@@ -115,6 +115,18 @@ describe Fastlane::Actions::CiBuildNumberAction do
       ENV.delete('XCS_INTEGRATION_NUMBER')
     end
 
+    it "Returns build number defined in BITBUCKET_BUILD_NUMBER environment variable if running on Bitbucket Pipelines" do
+      ENV['BITBUCKET_BUILD_NUMBER'] = '42'
+
+      result = Fastlane::FastFile.new.parse("lane :test do
+          ci_build_number
+        end").runner.execute(:test)
+
+      expect(result).to eq('42')
+
+      ENV.delete('BITBUCKET_BUILD_NUMBER')
+    end
+
     it "Uses 1 as a default build number if cannot detect" do
       result = Fastlane::FastFile.new.parse("lane :test do
         ci_build_number
