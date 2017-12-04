@@ -38,6 +38,10 @@ module Fastlane
           return ENV['BITBUCKET_BUILD_NUMBER']
         end
 
+        if ENV.key?('BUDDYBUILD_BUILD_NUMBER')
+          return ENV['BUDDYBUILD_BUILD_NUMBER']
+        end
+
         UI.error("Cannot detect current CI build number. Use 1 by default.")
         "1"
       end
