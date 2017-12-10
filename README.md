@@ -2,7 +2,7 @@
 
 ![CI Status](https://travis-ci.org/SiarheiFedartsou/fastlane-plugin-versioning.svg?branch=master)
 [![License](http://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/SiarheiFedartsou/fastlane-plugin-versioning/LICENSE)
-[![Gem](https://img.shields.io/gem/v/badge.svg?style=flat)](http://rubygems.org/gems/fastlane-plugin-versioning)
+[![Gem](https://img.shields.io/gem/v/fastlane-plugin-versioning.svg?style=flat)](http://rubygems.org/gems/fastlane-plugin-versioning)
 [![fastlane Plugin Badge](https://rawcdn.githack.com/fastlane/fastlane/master/fastlane/assets/plugin-badge.svg)](https://rubygems.org/gems/fastlane-plugin-versioning)
 
 
