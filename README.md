@@ -33,6 +33,10 @@ increment_version_number_in_plist(
   bump_type: 'minor' # Automatically increment minor version number
 )
 increment_version_number_in_plist(
+  bump_type: 'minor',
+  omit_zero_patch_version: true # if true omits zero in patch version(so 42.10.0 will become 42.10 and 42.10.1 will remain 42.10.1), default is false
+)
+increment_version_number_in_plist(
   bump_type: 'major' # Automatically increment major version number
 )
 increment_version_number_in_plist(

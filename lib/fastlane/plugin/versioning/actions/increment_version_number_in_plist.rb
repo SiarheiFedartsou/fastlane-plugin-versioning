@@ -16,17 +16,20 @@ module Fastlane
           case params[:bump_type]
           when "patch"
             version_array[2] = (version_array[2] ? version_array[2] : 0) + 1
-            next_version_number = version_array.join(".")
           when "minor"
             version_array[1] = (version_array[1] ? version_array[1] : 0) + 1
             version_array[2] = version_array[2] = 0
-            next_version_number = version_array.join(".")
           when "major"
             version_array[0] = (version_array[0] ? version_array[0] : 0) + 1
             version_array[1] = version_array[1] = 0
             version_array[1] = version_array[2] = 0
-            next_version_number = version_array.join(".")
           end
+
+          if params[:omit_zero_patch_version] && version_array[2] == 0
+            version_array.pop()
+          end
+
+          next_version_number = version_array.join(".")
         end
 
         if Helper.test?
@@ -63,6 +66,12 @@ module Fastlane
                                        env_name: "FL_VERSION_NUMBER_VERSION_NUMBER",
                                        description: "Change to a specific version. This will replace the bump type value",
                                        optional: true),
+          FastlaneCore::ConfigItem.new(key: :omit_zero_patch_version,
+                                       env_name: "FL_VERSION_NUMBER_OMIT_ZERO_PATCH_VERSION",
+                                       description: "If true omits zero in patch version(so 42.10.0 will become 42.10 and 42.10.1 will remain 42.10.1)",
+                                       default_value: false,
+                                       optional: true,
+                                       is_string: false),
           FastlaneCore::ConfigItem.new(key: :bundle_id,
                                        env_name: "FL_APPSTORE_VERSION_NUMBER_BUNDLE_ID",
                                        description: "Bundle ID of the application",

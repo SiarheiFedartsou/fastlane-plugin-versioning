@@ -64,6 +64,15 @@ describe Fastlane::Actions::IncrementVersionNumberInPlistAction do
       expect(Fastlane::Actions.lane_context[Fastlane::Actions::SharedValues::VERSION_NUMBER]).to eq("0.10.0")
     end
 
+    it "should omit zero in patch version if omit_zero_patch_version is true" do
+      result = Fastlane::FastFile.new.parse("lane :test do
+        increment_version_number_in_plist(bump_type: 'minor', omit_zero_patch_version: true)
+      end").runner.execute(:test)
+
+      expect(current_version).to eq("0.10")
+      expect(Fastlane::Actions.lane_context[Fastlane::Actions::SharedValues::VERSION_NUMBER]).to eq("0.10")
+    end
+
     it "should bump major version and set it to Info.plist" do
       result = Fastlane::FastFile.new.parse("lane :test do
         increment_version_number_in_plist(bump_type: 'major')
