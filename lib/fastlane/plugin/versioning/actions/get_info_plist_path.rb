@@ -47,6 +47,7 @@ module Fastlane
         end
 
         path = plist.gsub('$(SRCROOT)', project.path.parent.to_path)
+        path = path.gsub('${SRCROOT}', project.path.parent.to_path)
         unless (Pathname.new path).absolute?
           path = File.join(project.path.parent.to_path, path)
         end

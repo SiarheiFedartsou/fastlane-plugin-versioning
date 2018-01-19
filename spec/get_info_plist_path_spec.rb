@@ -89,6 +89,28 @@ describe Fastlane::Actions::GetInfoPlistPathAction do
       end
     end
 
+    describe "for Info.plist path containing ${SRCROOT}" do
+      let (:test_path) { "/tmp/fastlane/tests/fastlane" }
+      let (:fixtures_path) { "./spec/fixtures/xcodeproj" }
+      let (:proj_file) { "get_info_plist_path2.xcodeproj" }
+
+      let (:xcodeproj) { File.join(test_path, proj_file) }
+      let (:target) { "get_info_plist_path" }
+
+      it "should substitute ${SRCROOT} variable with project root path" do
+        result = Fastlane::FastFile.new.parse("lane :test do
+        get_info_plist_path ({
+          xcodeproj: '#{xcodeproj}',
+          target: '#{target}',
+          build_configuration_name: 'Release'
+        })
+        end").runner.execute(:test)
+        expect(result).to eq(File.join(test_path, "get_info_plist_path/Info_Release.plist"))
+      end
+    end
+
+
+
     after do
       # Clean up files
       FileUtils.rm_r(test_path)
