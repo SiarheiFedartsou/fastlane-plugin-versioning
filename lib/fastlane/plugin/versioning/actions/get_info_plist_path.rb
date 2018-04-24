@@ -46,6 +46,8 @@ module Fastlane
           end
         end
 
+        UI.user_error! 'Cannot resolve Info.plist build setting. Check it\'s defined or try defining it explicitly on the target without variables.' if plist.nil?
+
         path = plist.gsub('$(SRCROOT)', project.path.parent.to_path)
         path = path.gsub('${SRCROOT}', project.path.parent.to_path)
         unless (Pathname.new path).absolute?
