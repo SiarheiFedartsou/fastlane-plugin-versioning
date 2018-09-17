@@ -36,7 +36,7 @@ module Fastlane
         [
           FastlaneCore::ConfigItem.new(key: :build_number,
                                        env_name: "FL_BUILD_NUMBER_BUILD_NUMBER",
-                                       description: "Change to a specific version",
+                                       description: "Change to a specific build number",
                                        optional: true),
           FastlaneCore::ConfigItem.new(key: :xcodeproj,
                                        env_name: "FL_VERSION_NUMBER_PROJECT",
@@ -64,7 +64,7 @@ module Fastlane
 
       def self.output
         [
-          ['BUILD_NUMBER', 'The new version number']
+          ['BUILD_NUMBER', 'The new build number']
         ]
       end
 
