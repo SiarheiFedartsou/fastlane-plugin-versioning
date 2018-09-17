@@ -127,6 +127,18 @@ describe Fastlane::Actions::CiBuildNumberAction do
       ENV.delete('BITBUCKET_BUILD_NUMBER')
     end
 
+    it "Returns build number defined in BITRISE_BUILD_NUMBER environment variable if running on Bitrise" do
+      ENV['BITRISE_BUILD_NUMBER'] = '42'
+
+      result = Fastlane::FastFile.new.parse("lane :test do
+          ci_build_number
+        end").runner.execute(:test)
+
+      expect(result).to eq('42')
+
+      ENV.delete('BITRISE_BUILD_NUMBER')
+    end
+
     it "Returns build number defined in BUDDYBUILD_BUILD_NUMBER environment variable if running on BuddyBuild" do
       ENV['BUDDYBUILD_BUILD_NUMBER'] = '42'
 
