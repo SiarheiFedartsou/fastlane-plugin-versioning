@@ -5,7 +5,7 @@ module Fastlane
         if Helper.test?
           branch = 'releases/release-1.3.5'
         else
-          branch = Actions.git_branch
+          branch = other_action.git_branch
         end
 
         pattern = params[:pattern].dup
