@@ -5,6 +5,9 @@
 [![Gem](https://img.shields.io/gem/v/fastlane-plugin-versioning.svg?style=flat)](http://rubygems.org/gems/fastlane-plugin-versioning)
 [![fastlane Plugin Badge](https://rawcdn.githack.com/fastlane/fastlane/master/fastlane/assets/plugin-badge.svg)](https://rubygems.org/gems/fastlane-plugin-versioning)
 
+# MAINTAINERS WANTED
+
+Unfortunately I don't have enough time to maintain this project. If you want to become a maintainer of this project, please, open the issue or [email](mailto:siarhei.fedartsou@gmail.com) me.
 
 ## Getting Started
 
