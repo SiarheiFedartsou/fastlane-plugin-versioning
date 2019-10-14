@@ -20,3 +20,17 @@ end
 def remove_info_plist_fixture
   FileUtils.rm_r("/tmp/fastlane/tests/fastlane")
 end
+
+def copy_xcodeproj_fixtures
+  # Create test folder
+  FileUtils.mkdir_p("/tmp/fastlane/tests/fastlane")
+  source = "./spec/fixtures/xcodeproj"
+  destination = "/tmp/fastlane/tests/fastlane/xcodeproj"
+
+  # Copy .xcodeproj fixtures, as it will be modified during the test
+  FileUtils.cp_r(source, destination)
+end
+
+def remove_xcodeproj_fixtures
+  FileUtils.rm_r("/tmp/fastlane/tests/fastlane")
+end
