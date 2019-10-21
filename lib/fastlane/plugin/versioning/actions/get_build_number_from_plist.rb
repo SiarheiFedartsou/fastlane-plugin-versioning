@@ -9,6 +9,11 @@ module Fastlane
         end
 
         version_number = GetInfoPlistValueAction.run(path: plist, key: 'CFBundleVersion')
+        if version_number =~ /\$\(([\w\-]+)\)/
+          UI.important "info plist value is a build setting. will now resolve from xcodeproject."
+          version_number = GetBuildNumberFromXcodeprojAction.run(params)
+        end
+
         # Store the number in the shared hash
         Actions.lane_context[SharedValues::BUILD_NUMBER] = version_number
       end

@@ -17,7 +17,19 @@ module Fastlane
           plist = GetInfoPlistPathAction.run(params)
         end
 
-        SetInfoPlistValueAction.run(path: plist, key: 'CFBundleVersion', value: next_build_number)
+        build_number = GetInfoPlistValueAction.run(path: plist, key: 'CFBundleVersion')
+        if build_number =~ /\$\(([\w\-]+)\)/
+          UI.important "detected that build number is a build setting."
+          if params[:plist_build_setting_support]
+            UI.important "will continue and update the xcodeproj CURRENT_PROJECT_VERSION instead."
+            IncrementBuildNumberInXcodeProjAction.run(params) #TODO: implement me.
+          else
+            UI.important "will continue and update the info plist key. this will replace the existing value."
+            SetInfoPlistValueAction.run(path: plist, key: 'CFBundleVersion', value: next_build_number)
+          end
+        else
+          SetInfoPlistValueAction.run(path: plist, key: 'CFBundleVersion', value: next_build_number)
+        end
 
         Actions.lane_context[SharedValues::BUILD_NUMBER] = next_build_number
       end
@@ -28,7 +40,8 @@ module Fastlane
 
       def self.details
         [
-          "This action will increment the build number directly in Info.plist. "
+          "This action will increment the build number directly in Info.plist",
+          "unless plist_build_setting_support: true is passed in as parameters"
         ].join("\n")
       end
 
@@ -58,7 +71,11 @@ module Fastlane
                                        description: "Specify a specific scheme if you have multiple per project, optional"),
           FastlaneCore::ConfigItem.new(key: :build_configuration_name,
                                        optional: true,
-                                       description: "Specify a specific build configuration if you have different Info.plist build settings for each configuration")
+                                       description: "Specify a specific build configuration if you have different Info.plist build settings for each configuration"),
+          FastlaneCore::ConfigItem.new(key: :plist_build_setting_support,
+                                        description: "support automatic resolution of build setting from xcodeproj if not a literal value in the plist",
+                                        is_string: false,
+                                        default_value: false) #TODO: for backwards compatibility, should eventually turn to true?
         ]
       end
 
