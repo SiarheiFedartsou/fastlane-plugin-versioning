@@ -23,7 +23,7 @@
 		D0A25DE72353C905000C5EB4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D0A25DEA2353C905000C5EB4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D0A25DED2353C905000C5EB4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		D0A25DEF2353C905000C5EB4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D0A25DEF2353C905000C5EB4 /* New-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = New-Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,7 +40,7 @@
 		D0A25DD52353C902000C5EB4 = {
 			isa = PBXGroup;
 			children = (
-				D0A25DE02353C902000C5EB4 /* VersioningFixtureProject */,
+				D0A25DE02353C902000C5EB4 /* versioning_fixture_project */,
 				D0A25DDF2353C902000C5EB4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -53,7 +53,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		D0A25DE02353C902000C5EB4 /* VersioningFixtureProject */ = {
+		D0A25DE02353C902000C5EB4 /* versioning_fixture_project */ = {
 			isa = PBXGroup;
 			children = (
 				D0A25DE12353C902000C5EB4 /* AppDelegate.swift */,
@@ -61,10 +61,10 @@
 				D0A25DE52353C902000C5EB4 /* ContentView.swift */,
 				D0A25DE72353C905000C5EB4 /* Assets.xcassets */,
 				D0A25DEC2353C905000C5EB4 /* LaunchScreen.storyboard */,
-				D0A25DEF2353C905000C5EB4 /* Info.plist */,
+				D0A25DEF2353C905000C5EB4 /* New-Info.plist */,
 				D0A25DE92353C905000C5EB4 /* Preview Content */,
 			);
-			path = VersioningFixtureProject;
+			path = versioning_fixture_project;
 			sourceTree = "<group>";
 		};
 		D0A25DE92353C905000C5EB4 /* Preview Content */ = {
@@ -91,7 +91,7 @@
 			dependencies = (
 			);
 			name = versioning_fixture_project;
-			productName = VersioningFixtureProject;
+			productName = versioning_fixture_project;
 			productReference = D0A25DDE2353C902000C5EB4 /* versioning_fixture_project.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -286,15 +286,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"VersioningFixtureProject/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"versioning_fixture_project/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = VersioningFixtureProject/Info.plist;
+				INFOPLIST_FILE = versioning_fixture_project/New-Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.fastlane.community.action.versioning.VersioningFixtureProject;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fastlane.community.action.versioning.versioning_fixture_project;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -307,15 +307,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"VersioningFixtureProject/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"versioning_fixture_project/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = VersioningFixtureProject/Info.plist;
+				INFOPLIST_FILE = versioning_fixture_project/New-Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.fastlane.community.action.versioning.VersioningFixtureProject;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fastlane.community.action.versioning.versioning_fixture_project;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
