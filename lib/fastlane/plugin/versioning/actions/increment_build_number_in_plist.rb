@@ -22,7 +22,7 @@ module Fastlane
           UI.important "detected that build number is a build setting."
           if params[:plist_build_setting_support]
             UI.important "will continue and update the xcodeproj CURRENT_PROJECT_VERSION instead."
-            IncrementBuildNumberInXcodeProjAction.run(params) #TODO: implement me.
+            IncrementBuildNumberInXcodeprojAction.run(params)
           else
             UI.important "will continue and update the info plist key. this will replace the existing value."
             SetInfoPlistValueAction.run(path: plist, key: 'CFBundleVersion', value: next_build_number)

@@ -12,17 +12,33 @@ module Fastlane
               params[:xcodeproj] = Dir["*.xcodeproj"][0] unless params[:xcodeproj]
             end
           end
-  
+
           if params[:target]
             build_number = get_build_number_using_target(params)
-          else
+          elsif params[:build_configuration_name] && params[:scheme] 
             build_number = get_build_number_using_scheme(params)
+          else
+            UI.important "not enough information to pick a specific target or build configuration. taking the first one from the project"
+            build_number = get_first_build_number_in_xcodeproj(params)
           end
 
           Actions.lane_context[SharedValues::BUILD_NUMBER] = build_number #TODO: compared to ths plist getter, this is a slightly different meaning. BUILD_NUMBER is like <major>.<minor>.<patch>.<build> as opposed to <build>
           build_number
         end
   
+        def self.get_first_build_number_in_xcodeproj(params)
+          project = Xcodeproj::Project.open(params[:xcodeproj])
+          configs = project.objects.select { |obj| select_build_configuration_predicate(nil, obj) }
+          configs.first.build_settings["CURRENT_PROJECT_VERSION"]
+        end
+  
+        private_class_method
+        def self.select_build_configuration_predicate(name, configuration)
+          is_build_valid_configuration = configuration.isa == "XCBuildConfiguration" && !configuration.build_settings["PRODUCT_BUNDLE_IDENTIFIER"].nil?
+          is_build_valid_configuration &&= configuration.name == name unless name.nil?
+          return is_build_valid_configuration
+        end
+
         def self.get_build_number_using_target(params)
           project = Xcodeproj::Project.open(params[:xcodeproj])
           if params[:target]

@@ -8,9 +8,17 @@ module Fastlane
           plist = GetInfoPlistPathAction.run(params)
         end
 
-        version_number = GetInfoPlistValueAction.run(path: plist, key: 'CFBundleShortVersionString')
+        if params[:plist_build_setting_support]
+          UI.important "Version will originate from xcodeproj"
+          version_number = GetVersionNumberFromXcodeprojAction.run(params)
+        else
+          UI.important "Version will originate from plist."
+          version_number = GetInfoPlistValueAction.run(path: plist, key: 'CFBundleShortVersionString')
+        end
+
         # Store the number in the shared hash
         Actions.lane_context[SharedValues::VERSION_NUMBER] = version_number
+        version_number
       end
 
       #####################################################
@@ -49,7 +57,11 @@ module Fastlane
                              description: "Specify a specific scheme if you have multiple per project, optional"),
           FastlaneCore::ConfigItem.new(key: :build_configuration_name,
                              optional: true,
-                             description: "Specify a specific build configuration if you have different Info.plist build settings for each configuration")
+                             description: "Specify a specific build configuration if you have different Info.plist build settings for each configuration"),
+          FastlaneCore::ConfigItem.new(key: :plist_build_setting_support,
+                            description: "support automatic resolution of build setting from xcodeproj if not a literal value in the plist",
+                            is_string: false,
+                            default_value: false) #TODO: for backwards compatibility, should eventually turn to true?
 
         ]
       end
