@@ -8,14 +8,21 @@ module Fastlane
           plist = GetInfoPlistPathAction.run(params)
         end
 
-        version_number = GetInfoPlistValueAction.run(path: plist, key: 'CFBundleVersion')
-        if version_number =~ /\$\(([\w\-]+)\)/
-          UI.important "info plist value is a build setting. will now resolve from xcodeproject."
-          version_number = GetBuildNumberFromXcodeprojAction.run(params)
+        if params[:plist_build_setting_support]
+          UI.important "build number will originate from xcodeproj"
+          build_number = GetBuildNumberFromXcodeprojAction.run(params)
+        else
+          UI.important "build number will originate from plist."
+          build_number = GetInfoPlistValueAction.run(path: plist, key: 'CFBundleVersion')
+          if build_number =~ /\$\(([\w\-]+)\)/
+            UI.important "info plist value is a build setting. will now resolve from xcodeproject."
+            build_number = GetBuildNumberFromXcodeprojAction.run(params)
+          end
         end
 
         # Store the number in the shared hash
-        Actions.lane_context[SharedValues::BUILD_NUMBER] = version_number
+        Actions.lane_context[SharedValues::BUILD_NUMBER] = build_number
+        build_number
       end
 
       #####################################################
@@ -54,8 +61,11 @@ module Fastlane
                              description: "Specify a specific scheme if you have multiple per project, optional"),
           FastlaneCore::ConfigItem.new(key: :build_configuration_name,
                              optional: true,
-                             description: "Specify a specific build configuration if you have different Info.plist build settings for each configuration")
-
+                             description: "Specify a specific build configuration if you have different Info.plist build settings for each configuration"),
+          FastlaneCore::ConfigItem.new(key: :plist_build_setting_support,
+                              description: "support automatic resolution of build setting from xcodeproj if not a literal value in the plist",
+                              is_string: false,
+                              default_value: false) #TODO: for backwards compatibility, should eventually turn to true?
         ]
       end
 

@@ -14,6 +14,10 @@ module Fastlane
         else
           UI.important "Version will originate from plist."
           version_number = GetInfoPlistValueAction.run(path: plist, key: 'CFBundleShortVersionString')
+          if version_number =~ /\$\(([\w\-]+)\)/
+            UI.important "info plist value is a build setting. will now resolve from xcodeproject."
+            version_number = GetBuildNumberFromXcodeprojAction.run(params)
+          end
         end
 
         # Store the number in the shared hash
