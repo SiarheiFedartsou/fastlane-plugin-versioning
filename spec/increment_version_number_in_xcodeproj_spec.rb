@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Fastlane::Actions::IncrementVersionNumberInXcodeprojAction do
-  
   describe "Increment Version Number in xcodeproj Integration" do
     let (:test_path) { "/tmp/fastlane/tests/fastlane" }
     let (:fixtures_path) { "./spec/fixtures/plist" }
@@ -99,6 +98,5 @@ describe Fastlane::Actions::IncrementVersionNumberInXcodeprojAction do
     after do
       FileUtils.rm_r(test_path)
     end
-
   end
 end

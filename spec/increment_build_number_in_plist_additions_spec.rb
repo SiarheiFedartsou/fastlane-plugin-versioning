@@ -1,9 +1,7 @@
 require 'spec_helper'
 
 describe Fastlane::Actions::IncrementBuildNumberInPlistAction do
-  
-    describe "Increment new format of Build Numberin Info.plist Integration" do
-    
+  describe "Increment new format of Build Numberin Info.plist Integration" do
     let (:test_path) { "/tmp/fastlane/tests/fastlane" }
     let (:fixtures_path) { "./spec/fixtures/plist" }
     let (:plist_file) { "Info.plist" }
@@ -17,7 +15,7 @@ describe Fastlane::Actions::IncrementBuildNumberInPlistAction do
       destination = File.join(test_path, plist_file)
 
       FileUtils.cp_r(source, destination)
-      
+
       copy_xcodeproj_fixtures
     end
 

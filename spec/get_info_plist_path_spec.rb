@@ -109,8 +109,6 @@ describe Fastlane::Actions::GetInfoPlistPathAction do
       end
     end
 
-
-
     after do
       # Clean up files
       FileUtils.rm_r(test_path)

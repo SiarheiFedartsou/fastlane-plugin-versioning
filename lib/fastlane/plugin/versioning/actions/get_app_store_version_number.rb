@@ -42,7 +42,7 @@ module Fastlane
                              env_name: "FL_APPSTORE_VERSION_NUMBER_BUNDLE_ID",
                              description: "Bundle ID of the application",
                              optional: true,
-                             conflicting_options: [:xcodeproj, :target, :scheme, :build_configuration_name],
+                             conflicting_options: %i[xcodeproj target scheme build_configuration_name],
                              is_string: true),
           FastlaneCore::ConfigItem.new(key: :xcodeproj,
                              env_name: "FL_VERSION_NUMBER_PROJECT",
@@ -56,12 +56,12 @@ module Fastlane
           FastlaneCore::ConfigItem.new(key: :target,
                              env_name: "FL_VERSION_NUMBER_TARGET",
                              optional: true,
-                             conflicting_options: [:bundle_id, :scheme],
+                             conflicting_options: %i[bundle_id scheme],
                              description: "Specify a specific target if you have multiple per project, optional"),
           FastlaneCore::ConfigItem.new(key: :scheme,
                              env_name: "FL_VERSION_NUMBER_SCHEME",
                              optional: true,
-                             conflicting_options: [:bundle_id, :target],
+                             conflicting_options: %i[bundle_id target],
                              description: "Specify a specific scheme if you have multiple per project, optional"),
           FastlaneCore::ConfigItem.new(key: :build_configuration_name,
                              optional: true,
@@ -75,7 +75,7 @@ module Fastlane
       end
 
       def self.is_supported?(platform)
-        [:ios, :mac].include? platform
+        %i[ios mac].include? platform
       end
     end
   end

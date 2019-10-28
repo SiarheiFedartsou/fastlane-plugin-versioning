@@ -15,7 +15,7 @@ describe Fastlane::Actions::IncrementBuildNumberInXcodeprojAction do
       destination = File.join(test_path, plist_file)
 
       FileUtils.cp_r(source, destination)
-      
+
       copy_xcodeproj_fixtures
     end
 
@@ -46,6 +46,5 @@ describe Fastlane::Actions::IncrementBuildNumberInXcodeprojAction do
     after do
       FileUtils.rm_r(test_path)
     end
-
   end
 end

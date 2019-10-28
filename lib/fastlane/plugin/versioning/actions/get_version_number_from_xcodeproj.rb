@@ -37,7 +37,7 @@ module Fastlane
         end
 
         version_number = target.resolved_build_setting('MARKETING_VERSION', true)
-        UI.user_error! 'Cannot resolve build number build setting.' if version_number.nil? || version_number.empty? #TODO: come back to this message
+        UI.user_error! 'Cannot resolve build number build setting.' if version_number.nil? || version_number.empty? # TODO: come back to this message
 
         if !(build_configuration_name = params[:build_configuration_name]).nil?
           version_number = version_number[build_configuration_name]
@@ -57,7 +57,7 @@ module Fastlane
         project.select_scheme
 
         build_number = project.build_settings(key: 'MARKETING_VERSION')
-        #TODO: USER_ERROR message same as in line 38?
+        # TODO: USER_ERROR message same as in line 38?
         build_number
       end
 
@@ -105,7 +105,7 @@ module Fastlane
       end
 
       def self.is_supported?(platform)
-        [:ios, :mac].include? platform
+        %i[ios mac].include? platform
       end
     end
   end

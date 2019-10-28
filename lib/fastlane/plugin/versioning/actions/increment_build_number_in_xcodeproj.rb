@@ -1,4 +1,3 @@
-
 module Fastlane
   module Actions
     class IncrementBuildNumberInXcodeprojAction < Action
@@ -16,7 +15,7 @@ module Fastlane
         else
           current_build_number = GetBuildNumberFromXcodeprojAction.run(params)
           build_array = current_build_number.split(".").map(&:to_i)
-          build_array[-1] = build_array[-1]+1            
+          build_array[-1] = build_array[-1] + 1
           next_build_number = build_array.join(".")
         end
 
@@ -24,7 +23,7 @@ module Fastlane
           set_build_number_using_target(params, next_build_number)
         elsif params[:build_configuration_name] && params[:scheme]
           set_build_number_using_scheme(params, next_build_number)
-        else 
+        else
           set_all_xcodeproj_build_numbers(params, next_build_number)
         end
         Actions.lane_context[SharedValues::BUILD_NUMBER] = next_build_number
@@ -69,7 +68,7 @@ module Fastlane
         project = FastlaneCore::Project.new(config)
         project.select_scheme
 
-        project.build_settings["CURRENT_PROJECT_VERSION"] = next_build_number 
+        project.build_settings["CURRENT_PROJECT_VERSION"] = next_build_number
         project.save
       end
 

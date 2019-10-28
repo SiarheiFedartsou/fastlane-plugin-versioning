@@ -15,7 +15,7 @@ describe Fastlane::Actions::IncrementVersionNumberInPlistAction do
       destination = File.join(test_path, plist_file)
 
       FileUtils.cp_r(source, destination)
-      
+
       copy_xcodeproj_fixtures
       copy_info_plist_fixture
 

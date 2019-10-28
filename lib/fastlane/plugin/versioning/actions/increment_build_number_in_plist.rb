@@ -7,7 +7,7 @@ module Fastlane
         else
           current_build_number = GetBuildNumberFromPlistAction.run(params)
           build_array = current_build_number.split(".").map(&:to_i)
-          build_array[-1] = build_array[-1]+1            
+          build_array[-1] = build_array[-1] + 1
           next_build_number = build_array.join(".")
         end
 
@@ -28,7 +28,15 @@ module Fastlane
             SetInfoPlistValueAction.run(path: plist, key: 'CFBundleVersion', value: next_build_number)
           end
         else
-          SetInfoPlistValueAction.run(path: plist, key: 'CFBundleVersion', value: next_build_number)
+          if params[:plist_build_setting_support]
+            UI.important "will continue and update the xcodeproj CURRENT_PROJECT_VERSION instead."
+            IncrementBuildNumberInXcodeprojAction.run(params)
+            UI.important "will also update info plist key to be a build setting"
+            SetInfoPlistValueAction.run(path: plist, key: 'CFBundleVersion', value: "$(CURRENT_PROJECT_VERSION)")
+          else
+            UI.important "will continue and update the info plist key. this will replace the existing value."
+            SetInfoPlistValueAction.run(path: plist, key: 'CFBundleVersion', value: next_build_number)
+          end 
         end
 
         Actions.lane_context[SharedValues::BUILD_NUMBER] = next_build_number
@@ -75,7 +83,7 @@ module Fastlane
           FastlaneCore::ConfigItem.new(key: :plist_build_setting_support,
                                         description: "support automatic resolution of build setting from xcodeproj if not a literal value in the plist",
                                         is_string: false,
-                                        default_value: false) #TODO: for backwards compatibility, should eventually turn to true?
+                                        default_value: false) # TODO: for backwards compatibility, should eventually turn to true?
         ]
       end
 
@@ -90,7 +98,7 @@ module Fastlane
       end
 
       def self.is_supported?(platform)
-        [:ios, :mac].include? platform
+        %i[ios mac].include? platform
       end
     end
   end

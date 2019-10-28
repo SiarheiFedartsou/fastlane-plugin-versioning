@@ -1,4 +1,4 @@
-module Fastlane
+ module Fastlane
   module Actions
     class GetVersionNumberFromPlistAction < Action
       def self.run(params)
@@ -65,7 +65,7 @@ module Fastlane
           FastlaneCore::ConfigItem.new(key: :plist_build_setting_support,
                             description: "support automatic resolution of build setting from xcodeproj if not a literal value in the plist",
                             is_string: false,
-                            default_value: false) #TODO: for backwards compatibility, should eventually turn to true?
+                            default_value: false) # TODO: for backwards compatibility, should eventually turn to true?
 
         ]
       end
@@ -81,7 +81,7 @@ module Fastlane
       end
 
       def self.is_supported?(platform)
-        [:ios, :mac].include? platform
+        %i[ios mac].include? platform
       end
     end
   end
