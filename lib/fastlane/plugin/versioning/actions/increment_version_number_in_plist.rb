@@ -39,17 +39,22 @@ module Fastlane
         end
 
         if current_version =~ /\$\(([\w\-]+)\)/
-          UI.important "detected that build number is a build setting."
+          UI.important "detected that version is a build setting."
           if params[:plist_build_setting_support]
-            UI.important "will continue and update the xcodeproj CURRENT_PROJECT_VERSION instead."
+            UI.important "will continue and update the xcodeproj MARKETING_VERSION instead."
             IncrementVersionNumberInXcodeprojAction.run(params)
           else
             UI.important "will continue and update the info plist key. this will replace the existing value."
             SetInfoPlistValueAction.run(path: plist, key: 'CFBundleShortVersionString', value: next_version_number)
           end
         else
-          UI.important "setting plist build version"
-          SetInfoPlistValueAction.run(path: plist, key: 'CFBundleShortVersionString', value: next_version_number)
+          if params[:plist_build_setting_support]
+            UI.important "will update the xcodeproj MARKETING_VERSION."
+            IncrementVersionNumberInXcodeprojAction.run(params)
+          else
+            UI.important "will update the info plist key. this will replace the existing value."
+            SetInfoPlistValueAction.run(path: plist, key: 'CFBundleShortVersionString', value: next_version_number)
+          end
         end
 
         Actions.lane_context[SharedValues::VERSION_NUMBER] = next_version_number
