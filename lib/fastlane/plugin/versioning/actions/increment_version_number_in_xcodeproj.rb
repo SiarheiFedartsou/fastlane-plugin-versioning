@@ -6,9 +6,8 @@ module Fastlane
           next_version_number = params[:version_number]
         else
           case params[:version_source]
-          when "plist"
-            params[:plist_build_setting_support] = true
-            current_version = GetVersionNumberFromPlistAction.run(params)
+          when "xcodeproj"
+            current_version = GetVersionNumberFromXcodeprojAction.run(params)
           when "appstore"
             current_version = GetAppStoreVersionNumberAction.run(params)
           end
@@ -148,14 +147,14 @@ module Fastlane
           FastlaneCore::ConfigItem.new(key: :build_configuration_name,
                         optional: true,
                         conflicting_options: [:bundle_id],
-                        description: "Specify a specific build configuration if you have different Info.plist build settings for each configuration"),
+                        description: "Specify a specific build configuration if you have different build settings for each configuration"),
           FastlaneCore::ConfigItem.new(key: :version_source,
                         optional: true,
-                        default_value: 'plist',
+                        default_value: 'xcodeproj',
                         verify_block: proc do |value|
-                          UI.user_error!("Available values are 'plist' and 'appstore'") unless ['plist', 'appstore'].include? value
+                          UI.user_error!("Available values are 'xcodeproj' and 'appstore'") unless ['xcodeproj', 'appstore'].include? value
                         end,
-                        description: "Source version to increment. Available options: plist, appstore"),
+                        description: "Source version to increment. Available options: xcodeproj, appstore"),
           FastlaneCore::ConfigItem.new(key: :plist_build_setting_support,
                          description: "support automatic resolution of build setting from xcodeproj if not a literal value in the plist",
                          is_string: false,

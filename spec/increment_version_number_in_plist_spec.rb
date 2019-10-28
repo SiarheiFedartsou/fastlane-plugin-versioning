@@ -15,6 +15,9 @@ describe Fastlane::Actions::IncrementVersionNumberInPlistAction do
       destination = File.join(test_path, plist_file)
 
       FileUtils.cp_r(source, destination)
+      
+      copy_xcodeproj_fixtures
+      copy_info_plist_fixture
 
       fake_existing_response = File.read('./spec/fixtures/responses/numbers_lookup_response')
       stub_request(:get, "http://itunes.apple.com/lookup?bundleId=com.apple.Numbers").to_return(fake_existing_response)

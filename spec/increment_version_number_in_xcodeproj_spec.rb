@@ -17,13 +17,13 @@ describe Fastlane::Actions::IncrementVersionNumberInXcodeprojAction do
 
       FileUtils.cp_r(source, destination)
 
+      copy_xcodeproj_fixtures
+      copy_info_plist_fixture
+
       fake_existing_response = File.read('./spec/fixtures/responses/numbers_lookup_response')
       stub_request(:get, "http://itunes.apple.com/lookup?bundleId=com.apple.Numbers").to_return(fake_existing_response)
       fake_nonexistent_response = File.read('./spec/fixtures/responses/nonexistent_lookup_response')
       stub_request(:get, "http://itunes.apple.com/lookup?bundleId=com.some.nonexistent.app").to_return(fake_nonexistent_response)
-
-      copy_xcodeproj_fixtures
-      copy_info_plist_fixture
     end
 
     def current_version
@@ -78,7 +78,7 @@ describe Fastlane::Actions::IncrementVersionNumberInXcodeprojAction do
       expect(Fastlane::Actions.lane_context[Fastlane::Actions::SharedValues::VERSION_NUMBER]).to eq("0.1")
     end
 
-    it "should bump major version and set it to Info.plist" do
+    it "should bump major version and set it to xcodeproj" do
       result = Fastlane::FastFile.new.parse("lane :test do
         increment_version_number_in_xcodeproj(bump_type: 'major')
       end").runner.execute(:test)
