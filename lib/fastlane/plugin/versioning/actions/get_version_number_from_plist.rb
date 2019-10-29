@@ -73,7 +73,7 @@
       end
 
       def self.authors
-        ["SiarheiFedartsou"]
+        ["SiarheiFedartsou", "jdouglas-nz"]
       end
 
       def self.is_supported?(platform)
