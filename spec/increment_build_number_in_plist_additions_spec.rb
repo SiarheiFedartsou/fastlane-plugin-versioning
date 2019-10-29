@@ -2,36 +2,37 @@ require 'spec_helper'
 
 describe Fastlane::Actions::IncrementBuildNumberInPlistAction do
   describe "Increment new format of Build Numberin Info.plist Integration" do
+
     let (:test_path) { "/tmp/fastlane/tests/fastlane" }
-    let (:fixtures_path) { "./spec/fixtures/plist" }
-    let (:plist_file) { "Info.plist" }
+    let (:plist_file) { File.join("plist/", "Info.plist") }
 
     # Action parameters
     let (:info_plist_file) { File.join(test_path, plist_file) }
 
     before do
-      FileUtils.mkdir_p(test_path)
-      source = File.join(fixtures_path, 'New-Info.plist')
-      destination = File.join(test_path, plist_file)
-
-      FileUtils.cp_r(source, destination)
-
       copy_xcodeproj_fixtures
+      copy_info_plist_fixtures
     end
 
-    def current_version
+    def current_xcodeproj_build_number
       Fastlane::FastFile.new.parse("lane :test do
         get_build_number_from_xcodeproj
       end").runner.execute(:test)
     end
 
-    it "should set explicitly provided build number to xcodeproj if the value is non literal" do
+    def current_build_number_plist 
+      Fastlane::FastFile.new.parse("lane :test do
+        get_info_plist_value(path: '#{info_plist_file}', key: 'CFBundleVersion')
+      end").runner.execute(:test)
+    end
+
+    it "should set explicitly provided build number to plist if the value is non literal" do
       result = Fastlane::FastFile.new.parse("lane :test do
         increment_build_number_in_plist(build_number: '0.0.3')
       end").runner.execute(:test)
 
-      expect(current_version).to eq("1")
-      expect(Fastlane::Actions.lane_context[Fastlane::Actions::SharedValues::BUILD_NUMBER]).to eq("1")
+      expect(current_build_number_plist).to eq("0.0.3")
+      expect(Fastlane::Actions.lane_context[Fastlane::Actions::SharedValues::BUILD_NUMBER]).to eq("0.0.3")
     end
 
     it "should set explicitly provided build number to xcodeproj if the value is non literal with plist_build_setting_support: true" do
@@ -39,7 +40,7 @@ describe Fastlane::Actions::IncrementBuildNumberInPlistAction do
         increment_build_number_in_plist(plist_build_setting_support: true, build_number: '0.0.4')
       end").runner.execute(:test)
 
-      expect(current_version).to eq("0.0.4")
+      expect(current_xcodeproj_build_number).to eq("0.0.4")
       expect(Fastlane::Actions.lane_context[Fastlane::Actions::SharedValues::BUILD_NUMBER]).to eq("0.0.4")
     end
 
@@ -48,12 +49,12 @@ describe Fastlane::Actions::IncrementBuildNumberInPlistAction do
         increment_build_number_in_plist(plist_build_setting_support: true, build_number: '0.0.4')
       end").runner.execute(:test)
 
-      expect(current_version).to eq("0.0.4")
+      expect(current_xcodeproj_build_number).to eq("0.0.4")
       expect(Fastlane::Actions.lane_context[Fastlane::Actions::SharedValues::BUILD_NUMBER]).to eq("0.0.4")
     end
 
     after do
-      FileUtils.rm_r(test_path)
+      cleanup_fixtures
     end
   end
 end

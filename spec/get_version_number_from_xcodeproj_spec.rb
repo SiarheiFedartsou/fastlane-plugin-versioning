@@ -21,7 +21,7 @@ describe Fastlane::Actions::GetVersionNumberFromXcodeprojAction do
     end
 
     after do
-      remove_xcodeproj_fixtures
+      cleanup_fixtures
     end
   end
 end

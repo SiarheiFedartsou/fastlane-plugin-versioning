@@ -21,7 +21,7 @@ describe Fastlane::Actions::GetBuildNumberFromXcodeprojAction do
     end
 
     after do
-      remove_xcodeproj_fixtures
+      cleanup_fixtures
     end
   end
 end

@@ -3,26 +3,15 @@ require 'spec_helper'
 describe Fastlane::Actions::IncrementVersionNumberInPlistAction do
   describe "Increment Version Number in Info.plist Integration" do
     let (:test_path) { "/tmp/fastlane/tests/fastlane" }
-    let (:fixtures_path) { "./spec/fixtures/plist" }
-    let (:plist_file) { "Info.plist" }
+    let (:plist_file) { File.join("plist/", "Info.plist") }
 
     # Action parameters
     let (:info_plist_file) { File.join(test_path, plist_file) }
 
     before do
-      FileUtils.mkdir_p(test_path)
-      source = File.join(fixtures_path, plist_file)
-      destination = File.join(test_path, plist_file)
-
-      FileUtils.cp_r(source, destination)
-
       copy_xcodeproj_fixtures
-      copy_info_plist_fixture
-
-      fake_existing_response = File.read('./spec/fixtures/responses/numbers_lookup_response')
-      stub_request(:get, "http://itunes.apple.com/lookup?bundleId=com.apple.Numbers").to_return(fake_existing_response)
-      fake_nonexistent_response = File.read('./spec/fixtures/responses/nonexistent_lookup_response')
-      stub_request(:get, "http://itunes.apple.com/lookup?bundleId=com.some.nonexistent.app").to_return(fake_nonexistent_response)
+      copy_info_plist_fixtures
+      fake_api_responses
     end
 
     def current_version
@@ -95,7 +84,7 @@ describe Fastlane::Actions::IncrementVersionNumberInPlistAction do
     end
 
     after do
-      FileUtils.rm_r(test_path)
+      cleanup_fixtures
     end
   end
 end

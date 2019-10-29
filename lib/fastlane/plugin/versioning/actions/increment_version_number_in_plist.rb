@@ -33,7 +33,7 @@ module Fastlane
         end
 
         if Helper.test?
-          plist = "/tmp/fastlane/tests/fastlane/Info.plist"
+          plist = "/tmp/fastlane/tests/fastlane/plist/Info.plist"
         else
           plist = GetInfoPlistPathAction.run(params)
         end

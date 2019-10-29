@@ -9,11 +9,11 @@ module Fastlane
           bundle_id = params[:bundle_id]
         else
           if Helper.test?
-            plist = "/tmp/fastlane/tests/fastlane/Info.plist"
+            plist = "/tmp/fastlane/tests/fastlane/plist/Info.plist"
           else
             plist = GetInfoPlistPathAction.run(params)
           end
-          bundle_id = GetInfoPlistValueAction.run(path: plist, key: 'CFBundleIdentifier')
+          bundle_id = GetInfoPlistValueAction.run(path: plist, key: 'CFBundleIdentifier') # TODO: add same kind of flag to support build setting variables
         end
 
         uri = URI("http://itunes.apple.com/lookup?bundleId=#{bundle_id}")

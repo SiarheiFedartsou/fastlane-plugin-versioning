@@ -7,7 +7,7 @@ module Fastlane
       def self.run(params)
         unless params[:xcodeproj]
           if Helper.test?
-            params[:xcodeproj] = "/tmp/fastlane/tests/fastlane/bundle.xcodeproj"
+            params[:xcodeproj] = "/tmp/fastlane/tests/fastlane/xcodeproj/bundle.xcodeproj"
           else
             params[:xcodeproj] = Dir["*.xcodeproj"][0] unless params[:xcodeproj]
           end
