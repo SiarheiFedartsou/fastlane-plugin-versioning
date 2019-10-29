@@ -57,7 +57,7 @@ module Fastlane
         project.select_scheme
 
         build_number = project.build_settings(key: 'MARKETING_VERSION')
-        # TODO: USER_ERROR message same as in line 38?
+        UI.user_error! "Cannot resolve $(MARKETING_VERSION) in for the scheme #{config.scheme} with the name #{params.configuration}" if build_number.nil? || build_number.empty?
         build_number
       end
 
@@ -70,7 +70,7 @@ module Fastlane
       end
 
       def self.details
-        'TODO:'
+        'Gets the $(MARKETING_VERSION) build setting using the specified parameters, or the first if not enough parameters are passed.'
       end
 
       def self.available_options
@@ -96,7 +96,6 @@ module Fastlane
           FastlaneCore::ConfigItem.new(key: :build_configuration_name,
                                        optional: true,
                                        description: "Specify a specific build configuration if you have different build settings for each configuration")
-
         ]
       end
 

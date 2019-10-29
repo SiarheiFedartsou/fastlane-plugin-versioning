@@ -69,7 +69,8 @@ module Fastlane
 
       def self.details
         [
-          "This action will increment the version number directly in Info.plist. "
+          "This action will increment the version number directly in Info.plist. ",
+          "unless plist_build_setting_support: true is passed in as parameters"
         ].join("\n")
       end
 
@@ -131,8 +132,7 @@ module Fastlane
           FastlaneCore::ConfigItem.new(key: :plist_build_setting_support,
                                         description: "support automatic resolution of build setting from xcodeproj if not a literal value in the plist",
                                         is_string: false,
-                                        default_value: false) # TODO: for backwards compatibility, should eventually turn to true?
-
+                                        default_value: false)
         ]
       end
 

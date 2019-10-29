@@ -22,7 +22,7 @@ module Fastlane
           build_number = get_first_build_number_in_xcodeproj(params)
         end
 
-        Actions.lane_context[SharedValues::BUILD_NUMBER] = build_number # TODO: compared to ths plist getter, this is a slightly different meaning. BUILD_NUMBER is like <major>.<minor>.<patch>.<build> as opposed to <build>
+        Actions.lane_context[SharedValues::BUILD_NUMBER] = build_number
         build_number
       end
 
@@ -53,14 +53,14 @@ module Fastlane
         end
 
         build_number = target.resolved_build_setting('CURRENT_PROJECT_VERSION', true)
-        UI.user_error! 'Cannot resolve build number build setting.' if build_number.nil? || build_number.empty? # TODO: come back to this message
+        UI.user_error! 'Cannot resolve build number build setting.' if build_number.nil? || build_number.empty?
 
         if !(build_configuration_name = params[:build_configuration_name]).nil?
           build_number = build_number[build_configuration_name]
-          UI.user_error! "Cannot resolve CURRENT_PROJECT_VERSION build setting for #{build_configuration_name}." if plist.nil?
+          UI.user_error! "Cannot resolve $(CURRENT_PROJECT_VERSION) build setting for #{build_configuration_name}." if plist.nil?
         else
           build_number = build_number.values.compact.uniq
-          UI.user_error! 'Cannot accurately resolve CURRENT_PROJECT_VERSION build setting, try specifying :build_configuration_name.' if build_number.count > 1
+          UI.user_error! 'Cannot accurately resolve $(CURRENT_PROJECT_VERSION) build setting, try specifying :build_configuration_name.' if build_number.count > 1
           build_number = build_number.first
         end
 
@@ -73,7 +73,7 @@ module Fastlane
         project.select_scheme
 
         build_number = project.build_settings(key: 'CURRENT_PROJECT_VERSION')
-        # TODO: USER_ERROR message same as in line 38?
+        UI.user_error! "Cannot resolve $(CURRENT_PROJECT_VERSION) in for the scheme #{config.scheme} with the name #{params.configuration}" if build_number.nil? || build_number.empty?
         build_number
       end
 
@@ -82,11 +82,11 @@ module Fastlane
       #####################################################
 
       def self.description
-        "Get the version number of your project"
+        "Get the build number of your project"
       end
 
       def self.details
-        'TODO:'
+        'Gets the $(CURRENT_PROJECT_VERSION) build setting using the specified parameters, or the first if not enough parameters are passed.'
       end
 
       def self.available_options
@@ -112,7 +112,6 @@ module Fastlane
           FastlaneCore::ConfigItem.new(key: :build_configuration_name,
                                        optional: true,
                                        description: "Specify a specific build configuration if you have different build settings for each configuration")
-
         ]
       end
 

@@ -99,7 +99,6 @@ module Fastlane
           FastlaneCore::ConfigItem.new(key: :build_configuration_name,
                                        optional: true,
                                        description: "Specify a specific build configuration if you have different Info.plist build settings for each configuration")
-
         ]
       end
 

@@ -14,10 +14,6 @@ module Fastlane
         else
           UI.important "build number will originate from plist."
           build_number = GetInfoPlistValueAction.run(path: plist, key: 'CFBundleVersion')
-          if build_number =~ /\$\(([\w\-]+)\)/
-            UI.important "info plist value is a build setting. will now resolve from xcodeproject."
-            build_number = GetBuildNumberFromXcodeprojAction.run(params)
-          end
         end
 
         # Store the number in the shared hash
@@ -35,7 +31,8 @@ module Fastlane
 
       def self.details
         [
-          "This action will return the current build number set on your project's Info.plist."
+          "This action will return the current build number set on your project's Info.plist.",
+          "note that you can pass plist_build_setting_support: true, in which case it will return from your xcodeproj."
         ].join(' ')
       end
 
@@ -65,7 +62,7 @@ module Fastlane
           FastlaneCore::ConfigItem.new(key: :plist_build_setting_support,
                               description: "support automatic resolution of build setting from xcodeproj if not a literal value in the plist",
                               is_string: false,
-                              default_value: false) # TODO: for backwards compatibility, should eventually turn to true?
+                              default_value: false)
         ]
       end
 
