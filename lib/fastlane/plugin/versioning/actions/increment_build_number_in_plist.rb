@@ -21,7 +21,7 @@ module Fastlane
         if build_number =~ /\$\(([\w\-]+)\)/
           UI.important "detected that build number is a build setting."
           if params[:plist_build_setting_support]
-            UI.important "will continue and update the xcodeproj CURRENT_PROJECT_VERSION instead."
+            UI.important "will continue and update the xcodeproj $(CURRENT_PROJECT_VERSION) instead."
             IncrementBuildNumberInXcodeprojAction.run(params)
           else
             UI.important "will continue and update the info plist key. this will replace the existing value."
@@ -29,7 +29,7 @@ module Fastlane
           end
         else
           if params[:plist_build_setting_support]
-            UI.important "will continue and update the xcodeproj CURRENT_PROJECT_VERSION instead."
+            UI.important "will continue and update the xcodeproj $(CURRENT_PROJECT_VERSION) instead."
             IncrementBuildNumberInXcodeprojAction.run(params)
             UI.important "will also update info plist key to be a build setting"
             SetInfoPlistValueAction.run(path: plist, key: 'CFBundleVersion', value: "$(CURRENT_PROJECT_VERSION)")
