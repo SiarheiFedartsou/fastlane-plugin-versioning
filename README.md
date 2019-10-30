@@ -158,7 +158,7 @@ version = get_build_number_from_plist(xcodeproj: "Project.xcodeproj", # optional
 
 ### get_build_number_from_xcodeproj
 
-Get the build number from a xcodeproj - specific to a target. Doesn't use agvtool (unlike default `get_build_number`).
+Get the build number from a xcodeproj - specific to a target. Doesn't use `agvtool` (unlike default `get_build_number`).
 
 ```ruby
 version = get_build_number_from_xcodeproj(xcodeproj: "Project.xcodeproj", # optional
@@ -168,7 +168,7 @@ version = get_build_number_from_xcodeproj(xcodeproj: "Project.xcodeproj", # opti
 
 ### get_version_number_from_xcodeproj
 
-Get the version number from a xcodeproj - specific to a target. Doesn't use agvtool (unlike default `get_build_number`).
+Get the version number from a xcodeproj - specific to a target. Doesn't use `agvtool` (unlike default `get_build_number`).
 
 ```ruby
 version = get_version_number_from_xcodeproj(xcodeproj: 'Project.xcodeproj', # optional
