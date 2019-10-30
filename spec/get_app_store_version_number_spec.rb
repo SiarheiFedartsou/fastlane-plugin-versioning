@@ -1,15 +1,10 @@
 require 'spec_helper'
-require 'webmock/rspec'
 
 describe Fastlane::Actions::GetAppStoreVersionNumberAction do
   describe "Get App Store Version Number Integration" do
     before do
-      copy_info_plist_fixture
-
-      fake_existing_response = File.read('./spec/fixtures/responses/numbers_lookup_response')
-      stub_request(:get, "http://itunes.apple.com/lookup?bundleId=com.apple.Numbers").to_return(fake_existing_response)
-      fake_nonexistent_response = File.read('./spec/fixtures/responses/nonexistent_lookup_response')
-      stub_request(:get, "http://itunes.apple.com/lookup?bundleId=com.some.nonexistent.app").to_return(fake_nonexistent_response)
+      copy_info_plist_fixtures
+      fake_api_responses
     end
 
     it "should return current AppStore version number for app with provided bundle id" do
@@ -36,7 +31,7 @@ describe Fastlane::Actions::GetAppStoreVersionNumberAction do
     end
 
     after do
-      remove_info_plist_fixture
+      cleanup_fixtures
     end
   end
 end

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Fastlane::Actions::GetVersionNumberFromPlistAction do
   describe "Get Version Number from Info.plist Integration" do
     before do
-      copy_info_plist_fixture
+      copy_info_plist_fixtures
     end
 
     it "should return version number from Info.plist" do
@@ -21,7 +21,7 @@ describe Fastlane::Actions::GetVersionNumberFromPlistAction do
     end
 
     after do
-      remove_info_plist_fixture
+      cleanup_fixtures
     end
   end
 end

@@ -15,32 +15,52 @@ module Fastlane
           version_array = current_version.split(".").map(&:to_i)
           case params[:bump_type]
           when "patch"
-            version_array[2] = (version_array[2] ? version_array[2] : 0) + 1
+            version_array[2] = (version_array[2] || 0) + 1
           when "minor"
-            version_array[1] = (version_array[1] ? version_array[1] : 0) + 1
+            version_array[1] = (version_array[1] || 0) + 1
             version_array[2] = version_array[2] = 0
           when "major"
-            version_array[0] = (version_array[0] ? version_array[0] : 0) + 1
+            version_array[0] = (version_array[0] || 0) + 1
             version_array[1] = version_array[1] = 0
             version_array[1] = version_array[2] = 0
           end
 
           if params[:omit_zero_patch_version] && version_array[2] == 0
-            version_array.pop()
+            version_array.pop
           end
 
           next_version_number = version_array.join(".")
         end
 
         if Helper.test?
-          plist = "/tmp/fastlane/tests/fastlane/Info.plist"
+          plist = "/tmp/fastlane/tests/fastlane/plist/Info.plist"
         else
           plist = GetInfoPlistPathAction.run(params)
         end
 
-        SetInfoPlistValueAction.run(path: plist, key: 'CFBundleShortVersionString', value: next_version_number)
+        if current_version =~ /\$\(([\w\-]+)\)/
+          UI.important "detected that version is a build setting."
+          if params[:plist_build_setting_support]
+            UI.important "will continue and update the xcodeproj MARKETING_VERSION instead."
+            IncrementVersionNumberInXcodeprojAction.run(params)
+          else
+            UI.important "will continue and update the info plist key. this will replace the existing value."
+            SetInfoPlistValueAction.run(path: plist, key: 'CFBundleShortVersionString', value: next_version_number)
+          end
+        else
+          if params[:plist_build_setting_support]
+            UI.important "will update the xcodeproj MARKETING_VERSION."
+            IncrementVersionNumberInXcodeprojAction.run(params)
+            UI.important "will also update info plist key to be a build setting"
+            SetInfoPlistValueAction.run(path: plist, key: 'CFBundleShortVersionString', value: "$(MARKETING_VERSION)")
+          else
+            UI.important "will update the info plist key. this will replace the existing value."
+            SetInfoPlistValueAction.run(path: plist, key: 'CFBundleShortVersionString', value: next_version_number)
+          end
+        end
 
         Actions.lane_context[SharedValues::VERSION_NUMBER] = next_version_number
+        next_version_number
       end
 
       def self.description
@@ -49,7 +69,8 @@ module Fastlane
 
       def self.details
         [
-          "This action will increment the version number directly in Info.plist. "
+          "This action will increment the version number directly in Info.plist. ",
+          "unless plist_build_setting_support: true is passed in as parameters"
         ].join("\n")
       end
 
@@ -76,7 +97,7 @@ module Fastlane
                                        env_name: "FL_APPSTORE_VERSION_NUMBER_BUNDLE_ID",
                                        description: "Bundle ID of the application",
                                        optional: true,
-                                       conflicting_options: [:xcodeproj, :target, :build_configuration_name, :scheme],
+                                       conflicting_options: %i[xcodeproj target build_configuration_name scheme],
                                        is_string: true),
           FastlaneCore::ConfigItem.new(key: :xcodeproj,
                                        env_name: "FL_VERSION_NUMBER_PROJECT",
@@ -90,12 +111,12 @@ module Fastlane
           FastlaneCore::ConfigItem.new(key: :target,
                                        env_name: "FL_VERSION_NUMBER_TARGET",
                                        optional: true,
-                                       conflicting_options: [:bundle_id, :scheme],
+                                       conflicting_options: %i[bundle_id scheme],
                                        description: "Specify a specific target if you have multiple per project, optional"),
           FastlaneCore::ConfigItem.new(key: :scheme,
                                        env_name: "FL_VERSION_NUMBER_SCHEME",
                                        optional: true,
-                                       conflicting_options: [:bundle_id, :target],
+                                       conflicting_options: %i[bundle_id target],
                                        description: "Specify a specific scheme if you have multiple per project, optional"),
           FastlaneCore::ConfigItem.new(key: :build_configuration_name,
                                        optional: true,
@@ -107,7 +128,11 @@ module Fastlane
                                        verify_block: proc do |value|
                                          UI.user_error!("Available values are 'plist' and 'appstore'") unless ['plist', 'appstore'].include? value
                                        end,
-                                       description: "Source version to increment. Available options: plist, appstore")
+                                       description: "Source version to increment. Available options: plist, appstore"),
+          FastlaneCore::ConfigItem.new(key: :plist_build_setting_support,
+                                        description: "support automatic resolution of build setting from xcodeproj if not a literal value in the plist",
+                                        is_string: false,
+                                        default_value: false)
         ]
       end
 
@@ -117,12 +142,12 @@ module Fastlane
         ]
       end
 
-      def self.author
-        "SiarheiFedartsou"
+      def self.authors
+        ["SiarheiFedartsou", "jdouglas-nz"]
       end
 
       def self.is_supported?(platform)
-        [:ios, :mac].include? platform
+        %i[ios mac].include? platform
       end
     end
   end
