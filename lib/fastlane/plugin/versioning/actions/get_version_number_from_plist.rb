@@ -9,10 +9,10 @@
         end
 
         if params[:plist_build_setting_support]
-          UI.important "Version will originate from xcodeproj"
+          UI.important "version will originate from xcodeproj"
           version_number = GetVersionNumberFromXcodeprojAction.run(params)
         else
-          UI.important "Version will originate from plist."
+          UI.important "version will originate from plist."
           version_number = GetInfoPlistValueAction.run(path: plist, key: 'CFBundleShortVersionString')
         end
 

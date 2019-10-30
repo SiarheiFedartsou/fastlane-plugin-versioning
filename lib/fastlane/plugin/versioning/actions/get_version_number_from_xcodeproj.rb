@@ -37,14 +37,14 @@ module Fastlane
         end
 
         version_number = target.resolved_build_setting('MARKETING_VERSION', true)
-        UI.user_error! 'Cannot resolve build number build setting.' if version_number.nil? || version_number.empty? # TODO: come back to this message
+        UI.user_error! 'Cannot resolve version number build setting.' if version_number.nil? || version_number.empty?
 
         if !(build_configuration_name = params[:build_configuration_name]).nil?
           version_number = version_number[build_configuration_name]
-          UI.user_error! "Cannot resolve MARKETING_VERSION build setting for #{build_configuration_name}." if plist.nil?
+          UI.user_error! "Cannot resolve $(MARKETING_VERSION) build setting for #{build_configuration_name}." if plist.nil?
         else
           version_number = version_number.values.compact.uniq
-          UI.user_error! 'Cannot accurately resolve MARKETING_VERSION build setting, try specifying :build_configuration_name.' if version_number.count > 1
+          UI.user_error! 'Cannot accurately resolve $(MARKETING_VERSION) build setting, try specifying :build_configuration_name.' if version_number.count > 1
           version_number = version_number.first
         end
 

@@ -13,18 +13,18 @@ describe Fastlane::Actions::IncrementBuildNumberInPlistAction do
       copy_xcodeproj_fixtures
     end
 
-    def current_build_number
+    def current_build_number_plist
       Fastlane::FastFile.new.parse("lane :test do
         get_info_plist_value(path: '#{info_plist_file}', key: 'CFBundleVersion')
       end").runner.execute(:test)
     end
 
-    it "should set explicitly provided version number to Info.plist" do
+    it "should set explicitly provided build number to Info.plist" do
       result = Fastlane::FastFile.new.parse("lane :test do
         increment_build_number_in_plist(build_number: '1.9.4.1')
       end").runner.execute(:test)
 
-      expect(current_build_number).to eq("1.9.4.1")
+      expect(current_build_number_plist).to eq("1.9.4.1")
       expect(Fastlane::Actions.lane_context[Fastlane::Actions::SharedValues::BUILD_NUMBER]).to eq("1.9.4.1")
     end
 
@@ -33,7 +33,7 @@ describe Fastlane::Actions::IncrementBuildNumberInPlistAction do
         increment_build_number_in_plist
       end").runner.execute(:test)
 
-      expect(current_build_number).to eq("0.9.14.2")
+      expect(current_build_number_plist).to eq("0.9.14.2")
       expect(Fastlane::Actions.lane_context[Fastlane::Actions::SharedValues::BUILD_NUMBER]).to eq("0.9.14.2")
     end
 

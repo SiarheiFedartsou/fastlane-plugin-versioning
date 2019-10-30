@@ -24,13 +24,23 @@ end
 
 def copy_info_plist_fixtures
   FileUtils.mkdir_p("/tmp/fastlane/tests/fastlane/plist")
+
+  copy_non_literal_style_plist("InfoV2.plist")
+  copy_literal_value_style_plist
+end
+
+def copy_literal_value_style_plist(filename = "Info.plist")
+  FileUtils.mkdir_p("/tmp/fastlane/tests/fastlane/plist")
   source = "./spec/fixtures/plist/Info.plist"
-  destination = "/tmp/fastlane/tests/fastlane/plist/Info.plist" #copy old literal value style plist
+  destination = File.join("/tmp/fastlane/tests/fastlane/plist/", filename)
 
   FileUtils.cp_r(source, destination)
+end
 
+def copy_non_literal_style_plist(filename = "Info.plist")
+  FileUtils.mkdir_p("/tmp/fastlane/tests/fastlane/plist")
   source = "./spec/fixtures/plist/New-Info.plist"
-  destination = "/tmp/fastlane/tests/fastlane/plist/InfoV2.plist" #copy new non-literal value style plist
+  destination = File.join("/tmp/fastlane/tests/fastlane/plist/", filename)
   FileUtils.cp_r(source, destination)
 end
 

@@ -95,7 +95,7 @@ module Fastlane
       end
 
       def self.authors
-        ["SiarheiFedartsou", "jdouglas-nz"
+        ["SiarheiFedartsou", "jdouglas-nz"]
       end
 
       def self.is_supported?(platform)
