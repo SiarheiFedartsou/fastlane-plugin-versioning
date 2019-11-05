@@ -6,8 +6,8 @@ require 'fastlane/plugin/versioning/version'
 Gem::Specification.new do |spec|
   spec.name          = 'fastlane-plugin-versioning'
   spec.version       = Fastlane::Versioning::VERSION
-  spec.author        = %q{Siarhei Fiedartsou}
-  spec.email         = %q{siarhei.fedartsou@gmail.com}
+  spec.authors       = ['Siarhei Fiedartsou', 'John Douglas']
+  spec.email         = ['siarhei.fedartsou@gmail.com', 'john.douglas.nz@gmail.com']
 
   spec.summary       = %q{Allows to set/get app version and build number directly to/from Info.plist}
   spec.homepage      = "https://github.com/SiarheiFedartsou/fastlane-plugin-versioning"
