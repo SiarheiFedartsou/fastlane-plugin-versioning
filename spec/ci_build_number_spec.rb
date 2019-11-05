@@ -87,7 +87,7 @@ describe Fastlane::Actions::CiBuildNumberAction do
       ENV.delete('bamboo_buildNumber')
     end
 
-    it "Returns build number defined in CI_JOB_ID environment variable if running on GitLab CI" do
+    it "Returns build number defined in CI_JOB_ID environment variable if running on GitLab CI < v11.0 " do
       ENV['GITLAB_CI'] = '1'
       ENV['CI_JOB_ID'] = '42'
 
@@ -99,6 +99,23 @@ describe Fastlane::Actions::CiBuildNumberAction do
 
       ENV.delete('GITLAB_CI')
       ENV.delete('CI_JOB_ID')
+    end
+
+    it "Returns build number defined in CI_PIPELINE_IID environment variable if running on GitLab CI >= v11.0" do
+      ENV['GITLAB_CI'] = '1'
+      ENV['CI_PIPELINE_IID'] = '44'
+      ENV['CI_JOB_ID'] = '42'
+
+      result = Fastlane::FastFile.new.parse("lane :test do
+          ci_build_number
+        end").runner.execute(:test)
+
+      expect(result).to_not eq('42')
+      expect(result).to eq('44')
+
+      ENV.delete('GITLAB_CI')
+      ENV.delete('CI_JOB_ID')
+      ENV.delete('CI_PIPELINE_IID')
     end
 
     it "Returns build number defined in XCS_INTEGRATION_NUMBER environment variable if running on Xcode Server" do

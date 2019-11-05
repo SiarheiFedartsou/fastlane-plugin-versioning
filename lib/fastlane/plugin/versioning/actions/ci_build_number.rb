@@ -27,7 +27,7 @@ module Fastlane
         end
 
         if ENV.key?('GITLAB_CI')
-          return ENV['CI_JOB_ID']
+          return ENV['CI_PIPELINE_IID'] || ENV['CI_JOB_ID']
         end
 
         if ENV.key?('XCS')
@@ -50,7 +50,7 @@ module Fastlane
           return ENV['APPVEYOR_BUILD_NUMBER']
         end
 
-        UI.error("Cannot detect current CI build number. Use 1 by default.")
+        UI.error("Cannot detect current CI build number. Defaulting to \"1\".")
         "1"
       end
 
@@ -63,7 +63,7 @@ module Fastlane
       end
 
       def self.authors
-        ["Siarhei Fedartsou"]
+        ["Siarhei Fedartsou", "John Douglas"]
       end
 
       def self.example_code
