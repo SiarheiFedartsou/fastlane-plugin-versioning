@@ -50,7 +50,7 @@ module Fastlane
           return ENV['APPVEYOR_BUILD_NUMBER']
         end
 
-        UI.error("Cannot detect current CI build number. Use 1 by default.")
+        UI.error("Cannot detect current CI build number. Defaulting to \"1\".")
         "1"
       end
 
