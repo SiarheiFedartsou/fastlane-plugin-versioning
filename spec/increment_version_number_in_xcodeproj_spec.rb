@@ -16,6 +16,13 @@ describe Fastlane::Actions::IncrementVersionNumberInXcodeprojAction do
       version
     end
 
+    def current_target_version
+      version = Fastlane::FastFile.new.parse("lane :test do
+        get_version_number_from_xcodeproj(target: 'versioning_fixture_project')
+      end").runner.execute(:test)
+      version
+    end
+
     it "should set explicitly provided version number to xcodeproj" do
       result = Fastlane::FastFile.new.parse("lane :test do
         increment_version_number_in_xcodeproj(version_number: '1.9.4')
@@ -77,6 +84,15 @@ describe Fastlane::Actions::IncrementVersionNumberInXcodeprojAction do
 
       expect(current_version).to eq("3.0.0")
       expect(Fastlane::Actions.lane_context[Fastlane::Actions::SharedValues::VERSION_NUMBER]).to eq("3.0.0")
+    end
+
+    it "should explicitly set a target version number if specified" do
+      result = Fastlane::FastFile.new.parse("lane :test do
+        increment_version_number_in_xcodeproj(version_number:'1.0.0', target: 'versioning_fixture_project')
+      end").runner.execute(:test)
+
+      expect(current_target_version).to eq("1.0.0")
+      expect(Fastlane::Actions.lane_context[Fastlane::Actions::SharedValues::VERSION_NUMBER]).to eq("1.0.0")
     end
 
     after do

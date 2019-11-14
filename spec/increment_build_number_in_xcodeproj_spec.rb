@@ -13,6 +13,12 @@ describe Fastlane::Actions::IncrementBuildNumberInXcodeprojAction do
       end").runner.execute(:test)
     end
 
+    def current_target_build_number
+      Fastlane::FastFile.new.parse("lane :test do
+        get_build_number_from_xcodeproj(target: 'versioning_fixture_project')
+      end").runner.execute(:test)
+    end
+
     it "should set explicitly provided version number to xcodeproj" do
       result = Fastlane::FastFile.new.parse("lane :test do
         increment_build_number_in_xcodeproj(build_number: '1.9.4.1')
@@ -29,6 +35,15 @@ describe Fastlane::Actions::IncrementBuildNumberInXcodeprojAction do
 
       expect(current_build_number).to eq("2")
       expect(Fastlane::Actions.lane_context[Fastlane::Actions::SharedValues::BUILD_NUMBER]).to eq("2")
+    end
+
+    it "should explicitly set a target build number if specified" do
+      result = Fastlane::FastFile.new.parse("lane :test do
+        increment_build_number_in_xcodeproj(build_number:'22', target: 'versioning_fixture_project')
+      end").runner.execute(:test)
+
+      expect(current_target_build_number).to eq("22")
+      expect(Fastlane::Actions.lane_context[Fastlane::Actions::SharedValues::BUILD_NUMBER]).to eq("22")
     end
 
     after do

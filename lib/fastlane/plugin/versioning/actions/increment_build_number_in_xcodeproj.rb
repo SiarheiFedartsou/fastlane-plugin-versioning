@@ -59,7 +59,11 @@ module Fastlane
           target = project.targets[0] if target.nil?
         end
 
-        project.build_settings["CURRENT_PROJECT_VERSION"] = next_build_number
+        target.build_configurations.each do |config|
+          UI.message "updating #{config.name} to build #{next_build_number}"
+          config.build_settings["CURRENT_PROJECT_VERSION"] = next_build_number
+        end unless target.nil?
+
         project.save
       end
 
