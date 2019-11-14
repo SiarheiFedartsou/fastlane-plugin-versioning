@@ -66,7 +66,7 @@ module Fastlane
         return is_build_valid_configuration
       end
 
-      def self.set_build_version_using_target(params, next_version_number)
+      def self.set_version_number_using_target(params, next_version_number)
         project = Xcodeproj::Project.open(params[:xcodeproj])
         if params[:target]
           target = project.targets.detect { |t| t.name == params[:target] }
@@ -79,7 +79,11 @@ module Fastlane
           target = project.targets[0] if target.nil?
         end
 
-        project.build_settings["MARKETING_VERSION"] = next_version_number
+        target.build_configurations.each do |config|
+          UI.message "updating #{config.name} to version #{next_version_number}"
+          config.build_settings["MARKETING_VERSION"] = next_version_number
+        end unless target.nil?
+
         project.save
       end
 
