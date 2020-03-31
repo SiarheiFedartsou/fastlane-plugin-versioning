@@ -57,7 +57,7 @@ module Fastlane
 
         if !(build_configuration_name = params[:build_configuration_name]).nil?
           build_number = build_number[build_configuration_name]
-          UI.user_error! "Cannot resolve $(CURRENT_PROJECT_VERSION) build setting for #{build_configuration_name}." if plist.nil?
+          UI.user_error! "Cannot resolve $(CURRENT_PROJECT_VERSION) build setting for #{build_configuration_name}." if build_number.nil?
         else
           build_number = build_number.values.compact.uniq
           UI.user_error! 'Cannot accurately resolve $(CURRENT_PROJECT_VERSION) build setting, try specifying :build_configuration_name.' if build_number.count > 1

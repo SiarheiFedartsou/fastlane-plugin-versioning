@@ -94,7 +94,7 @@ describe Fastlane::Actions::IncrementVersionNumberInXcodeprojAction do
       expect(current_target_version).to eq("1.0.0")
       expect(Fastlane::Actions.lane_context[Fastlane::Actions::SharedValues::VERSION_NUMBER]).to eq("1.0.0")
     end
-
+    
     after do
       cleanup_fixtures
     end

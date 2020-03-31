@@ -87,7 +87,7 @@ module Fastlane
         project.save
       end
 
-      def self.set_build_version_using_scheme(params, next_version_number)
+      def self.set_version_number_using_scheme(params, next_version_number)
         config = { project: params[:xcodeproj], scheme: params[:scheme], configuration: params[:build_configuration_name] }
         project = FastlaneCore::Project.new(config)
         project.select_scheme
