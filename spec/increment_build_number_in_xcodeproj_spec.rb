@@ -46,6 +46,40 @@ describe Fastlane::Actions::IncrementBuildNumberInXcodeprojAction do
       expect(Fastlane::Actions.lane_context[Fastlane::Actions::SharedValues::BUILD_NUMBER]).to eq("22")
     end
 
+
+    it "should not crash when specifying build configuration name, target and project" do
+      file = Fastlane::FastFile.new.parse("
+        lane :increment do
+          increment_build_number_in_xcodeproj(
+            xcodeproj: '/tmp/fastlane/tests/fastlane/xcodeproj/versioning_fixture_project.xcodeproj',
+            target: 'versioning_fixture_project',
+            build_configuration_name: 'Release'
+          )
+        end")
+        
+        expect { 
+          result = file.runner.execute(:increment)
+          expect(result).to eq("2")
+        }.not_to raise_error
+    end
+
+    it "should not crash when specifying  build configuration name, target, project and build number" do
+      file = Fastlane::FastFile.new.parse("
+        lane :increment do
+          increment_build_number_in_xcodeproj(
+            xcodeproj: '/tmp/fastlane/tests/fastlane/xcodeproj/versioning_fixture_project.xcodeproj',
+            target: 'versioning_fixture_project',
+            build_configuration_name: 'Release',
+            build_number: '50'
+          )
+        end")
+        
+        expect { 
+          result = file.runner.execute(:increment)
+          expect(result).to eq("50")
+        }.not_to raise_error
+    end
+    
     after do
       cleanup_fixtures
     end
