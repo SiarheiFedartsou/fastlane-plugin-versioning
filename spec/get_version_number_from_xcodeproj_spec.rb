@@ -27,6 +27,7 @@ describe Fastlane::Actions::GetVersionNumberFromXcodeprojAction do
           build_configuration_name: \"Release\"
         )
       end")
+
       expect { 
         result = file.runner.execute(:test)
         expect(result).to eq("0.0.1")
@@ -35,7 +36,6 @@ describe Fastlane::Actions::GetVersionNumberFromXcodeprojAction do
     end
 
     it "should return a different result for Debug and Release if they are different" do
-
       xcodeproj_path = "/tmp/fastlane/tests/fastlane/xcodeproj/versioning_fixture_project_different_version_numbers.xcodeproj"
       
       release_version = Fastlane::FastFile.new.parse("lane :test do
@@ -57,6 +57,7 @@ describe Fastlane::Actions::GetVersionNumberFromXcodeprojAction do
       expect(release_version).to eq("1.0.0")
       expect(debug_version).to eq("1.0.1")
     end
+
     after do
       cleanup_fixtures
     end
