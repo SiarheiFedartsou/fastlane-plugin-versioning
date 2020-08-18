@@ -41,16 +41,16 @@ describe Fastlane::Actions::GetVersionNumberFromXcodeprojAction do
       release_version = Fastlane::FastFile.new.parse("lane :test do
         get_version_number_from_xcodeproj(
           xcodeproj: '#{xcodeproj_path}',
-          target: \"versioning_fixture_project_different_version_numbers\",
-          build_configuration_name: \"Release\"
+          target: 'versioning_fixture_project_different_version_numbers',
+          build_configuration_name: 'Release'
         )
       end").runner.execute(:test)
 
       debug_version = Fastlane::FastFile.new.parse("lane :test do
         get_version_number_from_xcodeproj(
           xcodeproj: '#{xcodeproj_path}',
-          target: \"versioning_fixture_project_different_version_numbers\",
-          build_configuration_name: \"Debug\"
+          target: 'versioning_fixture_project_different_version_numbers',
+          build_configuration_name: 'Debug'
         )
       end").runner.execute(:test)
 
