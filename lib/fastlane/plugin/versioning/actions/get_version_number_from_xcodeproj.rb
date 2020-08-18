@@ -41,7 +41,7 @@ module Fastlane
 
         if !(build_configuration_name = params[:build_configuration_name]).nil?
           version_number = version_number[build_configuration_name]
-          UI.user_error! "Cannot resolve $(MARKETING_VERSION) build setting for #{build_configuration_name}." if plist.nil?
+          UI.user_error! "Cannot resolve $(MARKETING_VERSION) build setting for #{build_configuration_name}." if version_number.nil?
         else
           version_number = version_number.values.compact.uniq
           UI.user_error! 'Cannot accurately resolve $(MARKETING_VERSION) build setting, try specifying :build_configuration_name.' if version_number.count > 1
