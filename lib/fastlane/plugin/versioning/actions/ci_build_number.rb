@@ -50,6 +50,10 @@ module Fastlane
           return ENV['APPVEYOR_BUILD_NUMBER']
         end
 
+        if ENV.key?('GITHUB_RUN_NUMBER')
+          return ENV['GITHUB_RUN_NUMBER']
+        end
+
         UI.error("Cannot detect current CI build number. Defaulting to \"1\".")
         "1"
       end
