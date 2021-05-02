@@ -105,7 +105,7 @@ describe Fastlane::Actions::IncrementVersionNumberInXcodeprojAction do
           bump_type: 'minor')
       end").runner.execute(:test)
 
-      expect(result).to eq("1.2.0") # this _was_ 1.1.0, and has now had a minor bump
+      expect(result).to eq("1.2.0") # this was 1.1.0, and has now had a minor bump
       expect(Fastlane::Actions.lane_context[Fastlane::Actions::SharedValues::VERSION_NUMBER]).to eq("1.2.0")
 
       other_scheme_version = Fastlane::FastFile.new.parse("lane :test do
