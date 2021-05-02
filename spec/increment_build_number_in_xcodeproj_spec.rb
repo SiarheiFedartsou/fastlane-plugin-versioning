@@ -46,6 +46,26 @@ describe Fastlane::Actions::IncrementBuildNumberInXcodeprojAction do
       expect(Fastlane::Actions.lane_context[Fastlane::Actions::SharedValues::BUILD_NUMBER]).to eq("22")
     end
 
+    it "should only change the configuration in the scheme specified" do
+      result = Fastlane::FastFile.new.parse("lane :test do
+        increment_build_number_in_xcodeproj(
+          xcodeproj: '/tmp/fastlane/tests/fastlane/xcodeproj/multischeme.xcodeproj',
+          scheme: 'multischeme_a',
+          build_configuration_name: 'ReleaseA')
+      end").runner.execute(:test)
+
+      expect(result).to eq("2") # this was 1, and has now had a bump
+      expect(Fastlane::Actions.lane_context[Fastlane::Actions::SharedValues::BUILD_NUMBER]).to eq("2")
+
+      other_scheme_version = Fastlane::FastFile.new.parse("lane :test do
+        get_build_number_from_xcodeproj(
+          xcodeproj: '/tmp/fastlane/tests/fastlane/xcodeproj/multischeme.xcodeproj',
+          scheme: 'multischeme_b',
+          build_configuration_name: 'ReleaseB')
+      end").runner.execute(:test)
+
+      expect(other_scheme_version).to eq("4") # this was 4, and should stay as 4
+    end
 
     it "should not crash when specifying build configuration name, target and project" do
       file = Fastlane::FastFile.new.parse("

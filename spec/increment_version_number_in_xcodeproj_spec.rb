@@ -94,6 +94,29 @@ describe Fastlane::Actions::IncrementVersionNumberInXcodeprojAction do
       expect(current_target_version).to eq("1.0.0")
       expect(Fastlane::Actions.lane_context[Fastlane::Actions::SharedValues::VERSION_NUMBER]).to eq("1.0.0")
     end
+
+
+    it "should only change the configuration in the scheme specified" do
+      result = Fastlane::FastFile.new.parse("lane :test do
+        increment_version_number_in_xcodeproj(
+          xcodeproj: '/tmp/fastlane/tests/fastlane/xcodeproj/multischeme.xcodeproj',
+          scheme: 'multischeme_a',
+          build_configuration_name: 'ReleaseA',
+          bump_type: 'minor')
+      end").runner.execute(:test)
+
+      expect(result).to eq("1.2.0") # this _was_ 1.1.0, and has now had a minor bump
+      expect(Fastlane::Actions.lane_context[Fastlane::Actions::SharedValues::VERSION_NUMBER]).to eq("1.2.0")
+
+      other_scheme_version = Fastlane::FastFile.new.parse("lane :test do
+        get_version_number_from_xcodeproj(
+          xcodeproj: '/tmp/fastlane/tests/fastlane/xcodeproj/multischeme.xcodeproj',
+          scheme: 'multischeme_b',
+          build_configuration_name: 'ReleaseB')
+      end").runner.execute(:test)
+
+      expect(other_scheme_version).to eq("1.3.0") # this was 1.3.0, and should stay as 1.3.0
+    end
     
     after do
       cleanup_fixtures
