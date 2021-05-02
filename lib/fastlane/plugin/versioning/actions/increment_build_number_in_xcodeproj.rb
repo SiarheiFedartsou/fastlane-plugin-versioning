@@ -69,11 +69,9 @@ module Fastlane
 
       def self.set_build_number_using_scheme(params, next_build_number)
         project = Xcodeproj::Project.open(params[:xcodeproj])
-        configs = project.objects.select { |obj| select_build_configuration_predicate(nil, obj) }
+        configs = project.objects.select { |obj| select_build_configuration_predicate(params[:build_configuration_name], obj) }
         configs.each do |config|
-            if config.to_s === params[:build_configuration_name]
-                config.build_settings["CURRENT_PROJECT_VERSION"] = next_build_number
-            end
+          config.build_settings["CURRENT_PROJECT_VERSION"] = next_build_number
         end
         
         project.save
