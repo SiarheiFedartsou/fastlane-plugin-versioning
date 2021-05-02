@@ -68,11 +68,12 @@ module Fastlane
       end
 
       def self.set_build_number_using_scheme(params, next_build_number)
-        config = { project: params[:xcodeproj], scheme: params[:scheme], configuration: params[:build_configuration_name] }
-        project = FastlaneCore::Project.new(config)
-        project.select_scheme
-
-        project.build_settings["CURRENT_PROJECT_VERSION"] = next_build_number
+        project = Xcodeproj::Project.open(params[:xcodeproj])
+        configs = project.objects.select { |obj| select_build_configuration_predicate(params[:build_configuration_name], obj) }
+        configs.each do |config|
+          config.build_settings["CURRENT_PROJECT_VERSION"] = next_build_number
+        end
+        
         project.save
       end
 
@@ -115,7 +116,7 @@ module Fastlane
       end
 
       def self.authors
-        ["jdouglas-nz"]
+        ["jdouglas-nz", "neilb01"]
       end
 
       def self.is_supported?(platform)
