@@ -65,3 +65,10 @@ end
 def cleanup_fixtures
   FileUtils.rm_r("/tmp/fastlane/tests/fastlane")
 end
+
+def line_from_file(line_number, file_path)
+  File.open(file_path) do |f|
+    (line_number-1).times { f.gets } # skip lines preceeding line N
+    f.gets                 # read line N contents
+  end
+end
