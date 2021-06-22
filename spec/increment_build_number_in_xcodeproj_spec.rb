@@ -105,8 +105,15 @@ describe Fastlane::Actions::IncrementBuildNumberInXcodeprojAction do
       result = Fastlane::FastFile.new.parse("lane :test do
         increment_build_number_in_xcodeproj(xcodeproj: '#{file_path}', build_number: '999')
       end").runner.execute(:test)
-    
-      expect(false).to eq(true)
+      
+      project_path = File.join(file_path, 'project.pbxproj')
+      expect(line_from_file(31, project_path)).not_to include("BuildFile ")
+      expect(line_from_file(14, project_path)).not_to include("BuildFile ")
+      expect(line_from_file(91, project_path)).not_to include("/* SwiftPackageProductDependency")
+      expect(line_from_file(121, project_path)).not_to include("/* RemoteSwiftPackageReference")
+      expect(line_from_file(343, project_path)).not_to include("/* RemoteSwiftPackageReference")
+      expect(line_from_file(354, project_path)).not_to include("/* SwiftPackageProductDependency")
+      expect(line_from_file(356, project_path)).not_to include("/* RemoteSwiftPackageReference")
     end
 
     after do
