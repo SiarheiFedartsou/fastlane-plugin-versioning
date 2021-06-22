@@ -99,7 +99,16 @@ describe Fastlane::Actions::IncrementBuildNumberInXcodeprojAction do
           expect(result).to eq("50")
         }.not_to raise_error
     end
+
+    it "should not bash any SwiftPM packages file guff" do
+      file_path = '/tmp/fastlane/tests/fastlane/xcodeproj/swiftpm.xcodeproj'
+      result = Fastlane::FastFile.new.parse("lane :test do
+        increment_build_number_in_xcodeproj(xcodeproj: '#{file_path}', build_number: '999')
+      end").runner.execute(:test)
     
+      expect(false).to eq(true)
+    end
+
     after do
       cleanup_fixtures
     end
