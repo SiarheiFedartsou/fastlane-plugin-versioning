@@ -16,7 +16,11 @@ module Fastlane
           bundle_id = GetInfoPlistValueAction.run(path: plist, key: 'CFBundleIdentifier') # TODO: add same kind of flag to support build setting variables
         end
 
-        uri = URI("http://itunes.apple.com/lookup?bundleId=#{bundle_id}")
+        if params[:country]
+          uri = URI("http://itunes.apple.com/lookup?bundleId=#{bundle_id}&country=#{country}")
+        else
+          uri = URI("http://itunes.apple.com/lookup?bundleId=#{bundle_id}")
+        end
         Net::HTTP.get(uri)
 
         response = Net::HTTP.get_response(uri)

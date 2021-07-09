@@ -108,12 +108,19 @@ version = get_version_number_from_plist(xcodeproj: 'Project.xcodeproj', # option
 
 ```ruby
 version = get_app_store_version_number(xcodeproj: 'Project.xcodeproj', # optional
-                                        target: 'TestTarget', # optional, or `scheme`
-                                        # optional, must be specified if you have different Info.plist build settings
-                                        # for different build configurations
-                                        build_configuration_name: 'Release')
-)
-version = get_app_store_version_number(bundle_id: 'com.apple.Numbers')
+                                       target: 'TestTarget', # optional, or `scheme`
+                                       # optional, must be specified if you have different Info.plist build settings
+                                       # for different build configurations
+                                       build_configuration_name: 'Release',
+                                       # optional, must be specified for the lookup to succeed, 
+                                       # if your app is only published to one country 
+                                       # passed value must be a country code
+                                       country: 'at')
+version = get_app_store_version_number(bundle_id: 'com.apple.Numbers',
+                                       # optional, must be specified for the lookup to succeed, 
+                                       # if your app is only published to one country 
+                                       # passed value must be a country code
+                                       country: 'at')
 
 ```
 
