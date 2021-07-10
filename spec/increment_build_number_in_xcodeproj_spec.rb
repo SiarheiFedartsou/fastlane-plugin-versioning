@@ -102,18 +102,32 @@ describe Fastlane::Actions::IncrementBuildNumberInXcodeprojAction do
 
     it "should not bash any SwiftPM packages file guff" do
       file_path = '/tmp/fastlane/tests/fastlane/xcodeproj/swiftpm.xcodeproj'
+      project_path = File.join(file_path, 'project.pbxproj')
+
       result = Fastlane::FastFile.new.parse("lane :test do
         increment_build_number_in_xcodeproj(xcodeproj: '#{file_path}', build_number: '999')
       end").runner.execute(:test)
       
-      project_path = File.join(file_path, 'project.pbxproj')
       expect(line_from_file(31, project_path)).not_to include("BuildFile ")
+      expect(line_from_file(31, project_path)).to include("DeckOfPlayingCards in Frameworks")
+
       expect(line_from_file(14, project_path)).not_to include("BuildFile ")
+      expect(line_from_file(14, project_path)).to include("DeckOfPlayingCards in Frameworks")
+
       expect(line_from_file(91, project_path)).not_to include("/* SwiftPackageProductDependency")
+      expect(line_from_file(91, project_path)).to include("DeckOfPlayingCards")
+
       expect(line_from_file(121, project_path)).not_to include("/* RemoteSwiftPackageReference")
+      expect(line_from_file(121, project_path)).to include('/* XCRemoteSwiftPackageReference "example-package-deckofplayingcards')
+
       expect(line_from_file(343, project_path)).not_to include("/* RemoteSwiftPackageReference")
+      expect(line_from_file(343, project_path)).to include('* XCRemoteSwiftPackageReference "example-package-deckofplayingcards')
+
       expect(line_from_file(354, project_path)).not_to include("/* SwiftPackageProductDependency")
+      expect(line_from_file(354, project_path)).to include("DeckOfPlayingCards")
+
       expect(line_from_file(356, project_path)).not_to include("/* RemoteSwiftPackageReference")
+      expect(line_from_file(356, project_path)).to include('/* XCRemoteSwiftPackageReference "example-package-deckofplayingcards')
     end
 
     after do
