@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    fastlane-plugin-versioning (0.4.5)
+    fastlane-plugin-versioning (0.4.6)
 
 GEM
   remote: https://rubygems.org/
