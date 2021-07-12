@@ -17,7 +17,7 @@ module Fastlane
         end
 
         if params[:country]
-          uri = URI("http://itunes.apple.com/lookup?bundleId=#{bundle_id}&country=#{country}")
+          uri = URI("http://itunes.apple.com/lookup?bundleId=#{bundle_id}&country=#{params[:country]}")
         else
           uri = URI("http://itunes.apple.com/lookup?bundleId=#{bundle_id}")
         end
@@ -70,7 +70,11 @@ module Fastlane
           FastlaneCore::ConfigItem.new(key: :build_configuration_name,
                              optional: true,
                              conflicting_options: [:bundle_id],
-                             description: "Specify a specific build configuration if you have different Info.plist build settings for each configuration")
+                             description: "Specify a specific build configuration if you have different Info.plist build settings for each configuration"),
+          FastlaneCore::ConfigItem.new(key: :country,
+                             optional: true,
+                             description: "Pass an optional country code, if your app's availability is limited to specific countries",
+                             is_string: true)
         ]
       end
 
