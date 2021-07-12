@@ -57,6 +57,13 @@ increment_version_number_in_plist(
   # Automatically increment patch version number. Use App Store version number as a source.
   version_source: 'appstore'
 )
+increment_version_number_in_plist(
+  # Automatically increment patch version number. Use App Store version number as a source.
+  version_source: 'appstore',
+  # optional two letter country code: 
+  # specify if availability of your app is limited to a certain country
+  country: 'at'
+)
 
 increment_version_number_in_plist(
   # specify specific version number (optional, omitting it increments patch version number)
@@ -111,15 +118,23 @@ version = get_app_store_version_number(xcodeproj: 'Project.xcodeproj', # optiona
                                        target: 'TestTarget', # optional, or `scheme`
                                        # optional, must be specified if you have different Info.plist build settings
                                        # for different build configurations
+                                       build_configuration_name: 'Release')
+
+version = get_app_store_version_number(xcodeproj: 'Project.xcodeproj', # optional
+                                       target: 'TestTarget', # optional, or `scheme`
+                                       # optional, must be specified if you have different Info.plist build settings
+                                       # for different build configurations
                                        build_configuration_name: 'Release',
                                        # optional, must be specified for the lookup to succeed, 
                                        # if your app is only published to one country 
                                        # passed value must be a country code
                                        country: 'at')
+
+version = get_app_store_version_number(bundle_id: 'com.apple.Numbers')
+
 version = get_app_store_version_number(bundle_id: 'com.apple.Numbers',
-                                       # optional, must be specified for the lookup to succeed, 
-                                       # if your app is only published to one country 
-                                       # passed value must be a country code
+                                       # optional two letter country code: 
+                                       # specify if availability of your app is limited to a certain country
                                        country: 'at')
 
 ```
@@ -210,6 +225,13 @@ increment_version_number_in_xcodeproj(
 increment_version_number_in_xcodeproj(
   # Automatically increment patch version number. Use App Store version number as a source.
   version_source: 'appstore'
+)
+increment_version_number_in_xcodeproj(
+  # Automatically increment patch version number. Use App Store version number as a source.
+  version_source: 'appstore',
+  # optional two letter country code: 
+  # specify if availability of your app is limited to a certain country
+  country: 'at'
 )
 
 increment_version_number_in_xcodeproj(
