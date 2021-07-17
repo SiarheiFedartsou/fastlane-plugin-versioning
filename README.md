@@ -277,6 +277,9 @@ increment_build_number_in_plist(
 
 SwiftPM can be tedious when using this plugin, at least in terms of git history and `xcodeproj`s. Up until recently, there were a number of annoyances caused by this plugin (and a downstream dependency of it) because writing to a project file would clobber some of the comment metadata inside of the project file and replace them - leaving you with the actual version change, but a number of other, less desirable changes too to hand pick through (or give up this plugin for). The advice is, update to `>= 0.4.6` of this plugin, and follow [this advice](https://github.com/SiarheiFedartsou/fastlane-plugin-versioning/issues/59#issuecomment-878255057) - which is to make sure not to include the `.git` at the end of your SwiftPM dependency URLs.
 
+### New / Fresh projects
+
+Note that you will need to set the build and version numbers through Xcode's UI at least once to use this plugin without weird `nil:NilClass` issues. See this [issue](https://github.com/SiarheiFedartsou/fastlane-plugin-versioning/issues/60) for context
 
 For any other issues and feedback about this plugin, please submit it to this repository.
 
