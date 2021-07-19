@@ -30,6 +30,13 @@ describe Fastlane::Actions::GetAppStoreVersionNumberAction do
       end.to raise_error(error_msg)
     end
 
+    it "should return current AppStore version number for app with provided bundle id in given country" do
+      result = Fastlane::FastFile.new.parse("lane :test do
+        get_app_store_version_number(bundle_id: 'com.apple.Numbers', country: 'us')
+      end").runner.execute(:test)
+      expect(result).to eq("11.1")
+    end
+
     after do
       cleanup_fixtures
     end

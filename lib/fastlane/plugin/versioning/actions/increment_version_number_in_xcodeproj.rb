@@ -159,6 +159,10 @@ module Fastlane
                           UI.user_error!("Available values are 'xcodeproj' and 'appstore'") unless ['xcodeproj', 'appstore'].include? value
                         end,
                         description: "Source version to increment. Available options: xcodeproj, appstore"),
+          FastlaneCore::ConfigItem.new(key: :country,
+                        optional: true,
+                        description: "Pass an optional country code, if your app's availability is limited to specific countries",
+                        is_string: true),
           FastlaneCore::ConfigItem.new(key: :plist_build_setting_support,
                          description: "support automatic resolution of build setting from xcodeproj if not a literal value in the plist",
                          is_string: false,
