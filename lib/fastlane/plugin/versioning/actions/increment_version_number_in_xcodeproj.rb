@@ -79,10 +79,17 @@ module Fastlane
           target = project.targets[0] if target.nil?
         end
 
-        target.build_configurations.each do |config|
+        if params[:build_configuration_name]
+          config = target.build_configurations.detect { |c| c.name == params[:build_configuration_name]}
+          UI.message "updating #{config.name} to version #{next_version_number}"
+          config.build_settings["MARKETING_VERSION"] = next_version_number
+        else
+          target.build_configurations.each do |config|
           UI.message "updating #{config.name} to version #{next_version_number}"
           config.build_settings["MARKETING_VERSION"] = next_version_number
         end unless target.nil?
+        end
+
 
         project.save
       end
