@@ -21,7 +21,7 @@ To make your scheme shared go to "Manage schemes" in Xcode and tick "Shared" che
 
 
 ### what is this `plist_build_setting_support` stuff about?!
-If you have a xcodeproject and have updated to Xcode 11, you'll notice that if you change your build and version numbers through the UI, the actual numbers are now stored inside build settings inside build confiugration. The Info.plist file -- where they used to be stored -- now contains build setting variables (looks like `$(CURRENT_PROJECT_VERSION)` or `$(MARKETING_VERSION)`, for build number and version number respectively).
+If you have a xcodeproject and have updated to Xcode 11, you'll notice that if you change your build and version numbers through the UI, the actual numbers are now stored inside build settings inside build configuration. The Info.plist file -- where they used to be stored -- now contains build setting variables (looks like `$(CURRENT_PROJECT_VERSION)` or `$(MARKETING_VERSION)`, for build number and version number respectively).
 If you are at this migration 'turning point', you have two options. you can either:
 
 - Continue using the legacy method of inserting build and versions directly into plists by simply add `plist_build_setting_support: true` to your plist action parameters
@@ -34,8 +34,6 @@ OR
 Verify your plist files are using the build variables (new) `$(CURRENT_PROJECT_VERSION)` or `$(MARKETING_VERSION)`. You can force this migration by simply modifying Version/Build fields for each one of your targets in UI. If you forget to make this change, or something else is writing and replacing it, xcodeproj actions will successfully update, but your build will have no reference to those values essentially becoming NOOP
 
 We will leave the plist actions in, as for those consumers who are limited to their upgrade path.
-
-
 
 ## Actions
 
