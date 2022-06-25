@@ -34,7 +34,7 @@ module Fastlane
 
       private_class_method
       def self.select_build_configuration_predicate(name, configuration)
-        is_build_valid_configuration = configuration.isa == "XCBuildConfiguration" && !configuration.build_settings["PRODUCT_BUNDLE_IDENTIFIER"].nil?
+        is_build_valid_configuration = configuration.isa == "XCBuildConfiguration" && !configuration.resolve_build_setting('PRODUCT_BUNDLE_IDENTIFIER').nil?
         is_build_valid_configuration &&= configuration.name == name unless name.nil?
         return is_build_valid_configuration
       end
