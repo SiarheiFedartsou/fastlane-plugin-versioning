@@ -85,9 +85,9 @@ module Fastlane
           config.build_settings["MARKETING_VERSION"] = next_version_number
         else
           target.build_configurations.each do |config|
-          UI.message "updating #{config.name} to version #{next_version_number}"
-          config.build_settings["MARKETING_VERSION"] = next_version_number
-        end unless target.nil?
+            UI.message "updating #{config.name} to version #{next_version_number}"
+            config.build_settings["MARKETING_VERSION"] = next_version_number
+          end unless target.nil?
         end
 
 
