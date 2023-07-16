@@ -3,6 +3,7 @@ module Fastlane
     class GetAppStoreVersionNumberAction < Action
 
       require 'json'
+      require 'securerandom'
 
       def self.run(params)
         if params[:bundle_id]
@@ -17,9 +18,9 @@ module Fastlane
         end
 
         if params[:country]
-          uri = URI("http://itunes.apple.com/lookup?bundleId=#{bundle_id}&country=#{params[:country]}")
+          uri = URI("http://itunes.apple.com/lookup?bundleId=#{bundle_id}&country=#{params[:country]}&rand=#{SecureRandom.uuid}")
         else
-          uri = URI("http://itunes.apple.com/lookup?bundleId=#{bundle_id}")
+          uri = URI("http://itunes.apple.com/lookup?bundleId=#{bundle_id}&rand=#{SecureRandom.uuid}")
         end
         Net::HTTP.get(uri)
 
