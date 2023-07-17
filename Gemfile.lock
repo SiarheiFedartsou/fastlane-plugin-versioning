@@ -164,7 +164,7 @@ GEM
     naturally (2.2.1)
     os (1.1.1)
     plist (3.6.0)
-    pry (0.14.1)
+    pry (0.14.2)
       coderay (~> 1.1)
       method_source (~> 1.0)
     public_suffix (4.0.6)
