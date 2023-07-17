@@ -17,10 +17,12 @@ module Fastlane
           bundle_id = GetInfoPlistValueAction.run(path: plist, key: 'CFBundleIdentifier') # TODO: add same kind of flag to support build setting variables
         end
 
+        random = Helper.test? ? "123" : SecureRandom.uuid
+
         if params[:country]
-          uri = URI("http://itunes.apple.com/lookup?bundleId=#{bundle_id}&country=#{params[:country]}&rand=#{SecureRandom.uuid}")
+          uri = URI("http://itunes.apple.com/lookup?bundleId=#{bundle_id}&country=#{params[:country]}&rand=#{random}")
         else
-          uri = URI("http://itunes.apple.com/lookup?bundleId=#{bundle_id}&rand=#{SecureRandom.uuid}")
+          uri = URI("http://itunes.apple.com/lookup?bundleId=#{bundle_id}&rand=#{random}")
         end
         Net::HTTP.get(uri)
 
@@ -80,7 +82,7 @@ module Fastlane
       end
 
       def self.authors
-        ["SiarheiFedartsou"]
+        ["SiarheiFedartsou", "jdouglas-nz", "raymondjacobson"]
       end
 
       def self.is_supported?(platform)

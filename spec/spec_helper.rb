@@ -17,11 +17,11 @@ def fake_api_responses
   FileUtils.cp_r(source, destination)
 
   fake_existing_response = File.read(File.join(destination, '/numbers_lookup_response'))
-  stub_request(:get, "http://itunes.apple.com/lookup?bundleId=com.apple.Numbers").to_return(fake_existing_response)
+  stub_request(:get, "http://itunes.apple.com/lookup?bundleId=com.apple.Numbers&rand=123").to_return(fake_existing_response)
   fake_existing_in_country_response = File.read(File.join(destination, '/numbers_lookup_country_us_response'))
-  stub_request(:get, "http://itunes.apple.com/lookup?bundleId=com.apple.Numbers&country=us").to_return(fake_existing_in_country_response)
+  stub_request(:get, "http://itunes.apple.com/lookup?bundleId=com.apple.Numbers&country=us&rand=123").to_return(fake_existing_in_country_response)
   fake_nonexistent_response = File.read(File.join(destination, '/nonexistent_lookup_response'))
-  stub_request(:get, "http://itunes.apple.com/lookup?bundleId=com.some.nonexistent.app").to_return(fake_nonexistent_response)
+  stub_request(:get, "http://itunes.apple.com/lookup?bundleId=com.some.nonexistent.app&rand=123").to_return(fake_nonexistent_response)
 end
 
 def copy_info_plist_fixtures
