@@ -117,7 +117,11 @@ module Fastlane
                                          description: "Specify a specific scheme if you have multiple per project, optional"),
           FastlaneCore::ConfigItem.new(key: :build_configuration_name,
                                          optional: true,
-                                         description: "Specify a specific build configuration if you have different build settings for each configuration")
+                                         description: "Specify a specific build configuration if you have different build settings for each configuration"),
+          FastlaneCore::ConfigItem.new(key: :skip_package_dependencies_resolution,
+                                         description: "Skips resolution of Swift Package Manager dependencies",
+                                         type: Boolean,
+                                         default_value: false)
         ]
       end
 

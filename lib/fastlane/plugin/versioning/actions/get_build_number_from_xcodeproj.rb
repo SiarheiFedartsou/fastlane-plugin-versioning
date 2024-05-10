@@ -68,7 +68,12 @@ module Fastlane
       end
 
       def self.get_build_number_using_scheme(params)
-        config = { project: params[:xcodeproj], scheme: params[:scheme], configuration: params[:build_configuration_name] }
+        config = {
+          project: params[:xcodeproj],
+          scheme: params[:scheme],
+          configuration: params[:build_configuration_name],
+          skip_package_dependencies_resolution: params[:skip_package_dependencies_resolution]
+        }
         project = FastlaneCore::Project.new(config)
         project.select_scheme
 
@@ -111,7 +116,11 @@ module Fastlane
                                        description: "Specify a specific scheme if you have multiple per project, optional"),
           FastlaneCore::ConfigItem.new(key: :build_configuration_name,
                                        optional: true,
-                                       description: "Specify a specific build configuration if you have different build settings for each configuration")
+                                       description: "Specify a specific build configuration if you have different build settings for each configuration"),
+          FastlaneCore::ConfigItem.new(key: :skip_package_dependencies_resolution,
+                                       description: "Skips resolution of Swift Package Manager dependencies",
+                                       type: Boolean,
+                                       default_value: false)
         ]
       end
 
