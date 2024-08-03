@@ -77,7 +77,11 @@ module Fastlane
           FastlaneCore::ConfigItem.new(key: :country,
                              optional: true,
                              description: "Pass an optional country code, if your app's availability is limited to specific countries",
-                             is_string: true)
+                             is_string: true),
+          FastlaneCore::ConfigItem.new(key: :skip_package_dependencies_resolution,
+                             description: "Skips resolution of Swift Package Manager dependencies",
+                             type: Boolean,
+                             default_value: false)
         ]
       end
 

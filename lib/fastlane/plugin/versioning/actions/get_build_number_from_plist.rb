@@ -62,7 +62,11 @@ module Fastlane
           FastlaneCore::ConfigItem.new(key: :plist_build_setting_support,
                               description: "support automatic resolution of build setting from xcodeproj if not a literal value in the plist",
                               is_string: false,
-                              default_value: false)
+                              default_value: false),
+          FastlaneCore::ConfigItem.new(key: :skip_package_dependencies_resolution,
+                               description: "Skips resolution of Swift Package Manager dependencies",
+                               type: Boolean,
+                               default_value: false)
         ]
       end
 
