@@ -16,7 +16,7 @@ module Fastlane
         if params[:target]
           version_number = get_version_number_using_target(params)
         else
-          version_number = get_version_number_using_project(params)
+          version_number = get_version_number_using_project(params) if params[:scheme].nil?
           version_number = get_version_number_using_scheme(params) if version_number.nil?
         end
 
