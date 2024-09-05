@@ -15,10 +15,9 @@ module Fastlane
 
         if params[:target]
           version_number = get_version_number_using_target(params)
-        elsif params[:scheme]
-          version_number = get_version_number_using_scheme(params)
-        else
+        else 
           version_number = get_version_number_using_project(params)
+          version_number = get_version_number_using_scheme(params) if version_number.nil?
         end
 
         Actions.lane_context[SharedValues::VERSION_NUMBER] = version_number
@@ -78,8 +77,6 @@ module Fastlane
         end
 
         version_number = project.build_settings(build_configuration_name)["MARKETING_VERSION"]
-        UI.user_error! "Cannot resolve $(MARKETING_VERSION) build setting for #{build_configuration_name}." if version_number.nil?
-        version_number
       end
 
       #####################################################
