@@ -9,6 +9,17 @@ describe Fastlane::Actions::IncrementVersionNumberInXcodeprojAction do
       fake_api_responses
     end
 
+    def current_project_level_version
+      xcodeproj_path = "/tmp/fastlane/tests/fastlane/xcodeproj/versioning_fixture_project_at_project_level.xcodeproj"
+
+      version = Fastlane::FastFile.new.parse("lane :test do
+        get_version_number_from_xcodeproj(
+          xcodeproj: '#{xcodeproj_path}'
+          )
+      end").runner.execute(:test)
+      version
+    end
+
     def current_version
       version = Fastlane::FastFile.new.parse("lane :test do
         get_version_number_from_xcodeproj
@@ -117,7 +128,21 @@ describe Fastlane::Actions::IncrementVersionNumberInXcodeprojAction do
 
       expect(other_scheme_version).to eq("1.3.0") # this was 1.3.0, and should stay as 1.3.0
     end
-    
+
+    it "should increment the project level version" do
+      expect(current_project_level_version).to eq("0.1.0")
+
+      xcodeproj_path = "/tmp/fastlane/tests/fastlane/xcodeproj/versioning_fixture_project_at_project_level.xcodeproj"
+
+      Fastlane::FastFile.new.parse("lane :test do
+        increment_version_number_in_xcodeproj(
+          xcodeproj: '#{xcodeproj_path}'
+        )
+      end").runner.execute(:test)
+
+      expect(current_project_level_version).to eq("0.1.1") # this was 0.1.0, and has now had a patch bump
+    end
+
     after do
       cleanup_fixtures
     end

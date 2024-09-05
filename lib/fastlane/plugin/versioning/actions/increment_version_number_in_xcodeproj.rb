@@ -32,7 +32,7 @@ module Fastlane
           next_version_number = version_array.join(".")
           end
 
-        if Helper.test?
+        if Helper.test? && params[:xcodeproj].nil?
           params[:xcodeproj] = "/tmp/fastlane/tests/fastlane/xcodeproj/versioning_fixture_project.xcodeproj"
         else
           params[:xcodeproj] = Dir["*.xcodeproj"][0] unless params[:xcodeproj]
@@ -52,9 +52,16 @@ module Fastlane
 
       def self.set_all_xcodeproj_version_numbers(params, next_version_number)
         project = Xcodeproj::Project.open(params[:xcodeproj])
-        configs = project.objects.select { |obj| select_build_configuration_predicate(nil, obj) }
-        configs.each do |config|
-          config.build_settings["MARKETING_VERSION"] = next_version_number
+
+        if project.build_configurations.find { |config| !config.build_settings["MARKETING_VERSION"].nil? }
+          project.build_configurations.each do |config|
+            config.build_settings["MARKETING_VERSION"] = next_version_number
+          end
+        else
+          configs = project.objects.select { |obj| select_build_configuration_predicate(nil, obj) }
+          configs.each do |config|
+            config.build_settings["MARKETING_VERSION"] = next_version_number
+          end
         end
         project.save
       end
