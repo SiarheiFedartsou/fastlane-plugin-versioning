@@ -16,9 +16,7 @@ describe Fastlane::Actions::IncrementVersionNumberInPlistAction do
 
     def current_xcodeproj_version_number
       Fastlane::FastFile.new.parse("lane :test do
-        get_version_number_from_xcodeproj(
-          scheme: 'versioning_fixture_project'
-        )
+        get_version_number_from_xcodeproj
       end").runner.execute(:test)
     end
 
