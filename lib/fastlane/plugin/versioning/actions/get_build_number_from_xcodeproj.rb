@@ -78,7 +78,7 @@ module Fastlane
         project.select_scheme
 
         build_number = project.build_settings(key: 'CURRENT_PROJECT_VERSION')
-        UI.user_error! "Cannot resolve $(CURRENT_PROJECT_VERSION) in for the scheme #{config.scheme} with the name #{params.configuration}" if build_number.nil? || build_number.empty?
+        UI.user_error! "Cannot resolve $(CURRENT_PROJECT_VERSION) in for the scheme #{config[:scheme]} with the name #{params[:configuration]}" if build_number.nil? || build_number.empty?
         build_number
       end
 
