@@ -20,9 +20,9 @@ module Fastlane
         random = Helper.test? ? "123" : SecureRandom.uuid
 
         if params[:country]
-          uri = URI("http://itunes.apple.com/lookup?bundleId=#{bundle_id}&country=#{params[:country]}&rand=#{random}")
+          uri = URI("https://itunes.apple.com/lookup?bundleId=#{bundle_id}&country=#{params[:country]}&rand=#{random}")
         else
-          uri = URI("http://itunes.apple.com/lookup?bundleId=#{bundle_id}&rand=#{random}")
+          uri = URI("https://itunes.apple.com/lookup?bundleId=#{bundle_id}&rand=#{random}")
         end
         Net::HTTP.get(uri)
 
