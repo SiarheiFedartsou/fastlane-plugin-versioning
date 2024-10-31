@@ -36,6 +36,7 @@ module Fastlane
 
           new_url = response['location']
           response = Net::HTTP.get_response(URI(new_url))
+          UI.crash!("Unexpected status code from iTunes Search API") unless response.kind_of?(Net::HTTPSuccess)
 
           response_body = JSON.parse(response.body)
         else
