@@ -1,0 +1,23 @@
+HTTP/1.1 302 Found
+Location: https://new.itunes.api.com/lookup?bundleId=com.apple.Numbers.with.redirect&rand=123
+x-apple-jingle-correlation-key: K6PQDAAX5J5E74DAKUMT56K5WI
+x-apple-application-site: NWK
+content-disposition: attachment; filename=1.txt
+apple-originating-system: MZStoreServices
+x-apple-translated-wo-url: /WebObjects/MZStoreServices.woa/ws/wsLookup?bundleId=com.apple.Numbers.with.redirect&urlDesc=
+apple-tk: false
+x-apple-orig-url: https://itunes.apple.com/lookup?bundleId=com.apple.Numbers.with.redirect&rand=123
+apple-seq: 0
+apple-timing-app: 62 ms
+x-content-type-options: nosniff
+Content-Type: text/javascript; charset=utf-8
+x-apple-application-instance: 1001143
+x-webobjects-loadaverage: 0
+x-apple-request-uuid: 579f0180-17ea-7a4f-f060-55193ef95db2
+Server: ATS/4.1.0
+X-Apple-ATS-Cache-Key: /17.154.42.219/80/lookup/iDevice?bundleId=com.apple.Numbers.with.redirect
+Cache-Control: no-transform, max-age=60
+Date: Mon, 06 Jun 2016 17:50:59 GMT
+Content-Length: 0
+Connection: keep-alive
+X-Apple-Partner: origin.0
