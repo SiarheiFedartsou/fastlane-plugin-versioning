@@ -37,6 +37,22 @@ describe Fastlane::Actions::GetAppStoreVersionNumberAction do
       expect(result).to eq("11.1")
     end
 
+    it "should manage HTTP 302 redirect and return current AppStore version number for app with provided bundle id" do
+      result = Fastlane::FastFile.new.parse("lane :test do
+        get_app_store_version_number(bundle_id: 'com.apple.Numbers.with.redirect')
+      end").runner.execute(:test)
+      expect(result).to eq("2.6.2")
+    end
+
+    it "should return an error if a error response is handled" do
+      error_msg = "Unexpected status code from iTunes Search API"
+      expect do
+        Fastlane::FastFile.new.parse("lane :test do
+          get_app_store_version_number(bundle_id: 'com.apple.with.error')
+        end").runner.execute(:test)
+      end.to raise_error(error_msg)
+    end
+
     after do
       cleanup_fixtures
     end

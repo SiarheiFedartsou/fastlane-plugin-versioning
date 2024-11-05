@@ -20,15 +20,28 @@ module Fastlane
         random = Helper.test? ? "123" : SecureRandom.uuid
 
         if params[:country]
-          uri = URI("http://itunes.apple.com/lookup?bundleId=#{bundle_id}&country=#{params[:country]}&rand=#{random}")
+          uri = URI("https://itunes.apple.com/lookup?bundleId=#{bundle_id}&country=#{params[:country]}&rand=#{random}")
         else
-          uri = URI("http://itunes.apple.com/lookup?bundleId=#{bundle_id}&rand=#{random}")
+          uri = URI("https://itunes.apple.com/lookup?bundleId=#{bundle_id}&rand=#{random}")
         end
         Net::HTTP.get(uri)
 
         response = Net::HTTP.get_response(uri)
-        UI.crash!("Unexpected status code from iTunes Search API") unless response.kind_of?(Net::HTTPSuccess)
-        response_body = JSON.parse(response.body)
+        case response
+        when Net::HTTPSuccess
+          response_body = JSON.parse(response.body)
+        when Net::HTTPRedirection
+          UI.crash!("iTunes Search API resolved with status code 302, but no redirect url has been received") unless response['location']
+          UI.important("iTunes Search API resolved with status code 302, redirecting to new url")
+
+          new_url = response['location']
+          response = Net::HTTP.get_response(URI(new_url))
+          UI.crash!("Unexpected status code from iTunes Search API") unless response.kind_of?(Net::HTTPSuccess)
+
+          response_body = JSON.parse(response.body)
+        else
+          UI.crash!("Unexpected status code from iTunes Search API")
+        end
 
         UI.user_error!("Cannot find app with #{bundle_id} bundle ID in the App Store") if response_body["resultCount"] == 0
 
