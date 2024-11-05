@@ -16,7 +16,8 @@ module Fastlane
         if params[:target]
           version_number = get_version_number_using_target(params)
         else
-          version_number = get_version_number_using_scheme(params)
+          version_number = get_version_number_using_project(params) if params[:scheme].nil?
+          version_number = get_version_number_using_scheme(params) if version_number.nil?
         end
 
         Actions.lane_context[SharedValues::VERSION_NUMBER] = version_number
@@ -64,6 +65,18 @@ module Fastlane
         build_number = project.build_settings(key: 'MARKETING_VERSION')
         UI.user_error! "Cannot resolve $(MARKETING_VERSION) in for the scheme #{config[:scheme]} with the name #{config[:configuration]}" if build_number.nil? || build_number.empty?
         build_number
+      end
+
+      def self.get_version_number_using_project(params)
+        project = Xcodeproj::Project.open(params[:xcodeproj])
+
+        if params[:build_configuration_name] && !params[:build_configuration_name].empty?
+          build_configuration_name = params[:build_configuration_name]
+        else
+          build_configuration_name = project.build_configurations.first.name
+        end
+
+        version_number = project.build_settings(build_configuration_name)["MARKETING_VERSION"]
       end
 
       #####################################################
