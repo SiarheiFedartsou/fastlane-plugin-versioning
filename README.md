@@ -152,7 +152,6 @@ version = get_app_store_version_number(bundle_id: 'com.apple.Numbers',
 # `pattern` is pattern by which version number will be found, `#` is place where action must find version number.
 # Default value is 'release-#'(for instance for branch name 'releases/release-1.5.0' will extract '1.5.0')
 version = get_version_number_from_git_branch(pattern: 'release-#')
-
 ```
 
 ### increment_build_number_in_plist
@@ -175,10 +174,10 @@ Get the build number from an Info.plist of specific target. Doesn't use `agvtool
 
 ```ruby
 version = get_build_number_from_plist(xcodeproj: "Project.xcodeproj", # optional
-                                        target: 'TestTarget', # optional, or `scheme`
-                                        plist_build_setting_support: true, # optional, and defaulting to false. setting this will 
-                                        # resolve the build number using the relevant build settings from your xcodeproj.
-                                        build_configuration_name: 'Release') # optional, must be specified if you have different Info.plist build settings for different build configurations
+                                      target: 'TestTarget', # optional, or `scheme`
+                                      plist_build_setting_support: true, # optional, and defaulting to false. setting this will 
+                                      # resolve the build number using the relevant build settings from your xcodeproj.
+                                      build_configuration_name: 'Release') # optional, must be specified if you have different Info.plist build settings for different build configurations
 ```
 
 #### plist_build_setting_support
@@ -201,8 +200,8 @@ Get the build number from a xcodeproj - specific to a target. Doesn't use `agvto
 
 ```ruby
 version = get_build_number_from_xcodeproj(xcodeproj: "Project.xcodeproj", # optional
-                                        target: 'TestTarget', # optional, or `scheme`
-                                        build_configuration_name: 'Release') # optional, must be specified if you have different Info.plist build settings for different build configurations
+                                          target: 'TestTarget', # optional, or `scheme`
+                                          build_configuration_name: 'Release') # optional, must be specified if you have different Info.plist build settings for different build configurations
 ```
 
 ### increment_version_number_in_xcodeproj
@@ -257,10 +256,10 @@ Get the version number from a xcodeproj - specific to a target. Doesn't use `agv
 
 ```ruby
 version = get_version_number_from_xcodeproj(xcodeproj: 'Project.xcodeproj', # optional
-                                        target: 'TestTarget', # optional, or `scheme`
-                                        # optional, must be specified if you have different Info.plist build settings
-                                        # for different build configurations
-                                        build_configuration_name: 'Release')
+                                            target: 'TestTarget', # optional, or `scheme`
+                                            # optional, must be specified if you have different Info.plist build settings
+                                            # for different build configurations
+                                            build_configuration_name: 'Release')
 ```
 
 ### get_info_plist_path
