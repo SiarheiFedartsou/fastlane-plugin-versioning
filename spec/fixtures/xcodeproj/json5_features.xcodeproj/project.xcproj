@@ -1,0 +1,35 @@
+// Hand-edited project: comments and trailing commas are allowed in project.xcproj.
+{
+  "default-configuration": "Release",
+  "configurations": [
+    "Debug",
+    { "name": "Release", "file": "Config/Release.xcconfig" },
+  ],
+  "localizations": { "development": "en" },
+  "files": [],
+  "targets": [
+    {
+      "name": "Scripts",
+      "id": "SCRIPTS-ID",
+      "kind": "aggregate",
+    },
+    /* The app */
+    {
+      "name": "json5_features",
+      "id": "APP-ID",
+      "full-product-type": "com.apple.product-type.application",
+      "build-settings": {
+        "CURRENT_PROJECT_VERSION": "7", // build number
+        "MARKETING_VERSION": "2.3", /* version */
+        "PRODUCT_BUNDLE_IDENTIFIER": "com.example.json5_features",
+        "OTHER_SWIFT_FLAGS": "-D \"URL=http://example.com\" /* not a comment */",
+      },
+    },
+    {
+      "name": "json5_features_widget",
+      "id": "WIDGET-ID",
+      "product-type": "app-extension",
+    },
+  ],
+  "build-settings": { "SDKROOT": "iphoneos", },
+}

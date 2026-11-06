@@ -7,7 +7,11 @@ module Fastlane
       def self.run(params)
         unless params[:xcodeproj]
           if Helper.test?
-            params[:xcodeproj] = "/tmp/fastlane/tests/fastlane/xcodeproj/bundle.xcodeproj"
+            if Helper::Xcproj.enabled?(params)
+              params[:xcodeproj] = "/tmp/fastlane/tests/fastlane/xcodeproj/bundle_xcproj.xcodeproj"
+            else
+              params[:xcodeproj] = "/tmp/fastlane/tests/fastlane/xcodeproj/bundle.xcodeproj"
+            end
           else
             params[:xcodeproj] = Dir["*.xcodeproj"][0] unless params[:xcodeproj]
           end
@@ -22,14 +26,22 @@ module Fastlane
       end
 
       def self.find_path_using_target(params)
-        project = Xcodeproj::Project.open(params[:xcodeproj])
+        if Helper::Xcproj.enabled?(params)
+          project = Helper::Xcproj::Project.open(params[:xcodeproj])
+        else
+          project = Xcodeproj::Project.open(params[:xcodeproj])
+        end
         if params[:target]
           target = project.targets.detect { |t| t.name == params[:target] }
         else
           # firstly we are trying to find modern application target
-          target = project.targets.detect do |t|
-            t.kind_of?(Xcodeproj::Project::Object::PBXNativeTarget) &&
-              t.product_type == 'com.apple.product-type.application'
+          if Helper::Xcproj.enabled?(params)
+            target = project.targets.detect { |t| t.product_type == 'com.apple.product-type.application' }
+          else
+            target = project.targets.detect do |t|
+              t.kind_of?(Xcodeproj::Project::Object::PBXNativeTarget) &&
+                t.product_type == 'com.apple.product-type.application'
+            end
           end
           target = project.targets[0] if target.nil?
         end
@@ -59,8 +71,13 @@ module Fastlane
           configuration: params[:build_configuration_name],
           skip_package_dependencies_resolution: params[:skip_package_dependencies_resolution]
         }
-        project = FastlaneCore::Project.new(config)
-        project.select_scheme
+        if Helper::Xcproj.enabled?(params)
+          project = Helper::Xcproj::Project.open(params[:xcodeproj])
+          project.select_scheme(config[:scheme], config[:configuration])
+        else
+          project = FastlaneCore::Project.new(config)
+          project.select_scheme
+        end
 
         path = project.build_settings(key: 'INFOPLIST_FILE')
         unless (Pathname.new path).absolute?
@@ -91,6 +108,11 @@ module Fastlane
                                          UI.user_error!("Please pass the path to the project, not the workspace") if value.end_with? ".xcworkspace"
                                          UI.user_error!("Could not find Xcode project at path '#{File.expand_path(value)}'") if !File.exist?(value) and !Helper.is_test?
                                        end),
+          FastlaneCore::ConfigItem.new(key: :json_format,
+                                       env_name: "FL_INFO_PLIST_JSON_FORMAT",
+                                       description: "Use the JSON based project.xcproj of the Xcode project instead of its project.pbxproj",
+                                       type: Boolean,
+                                       default_value: false),
           FastlaneCore::ConfigItem.new(key: :target,
                                        env_name: "FL_INFO_PLIST_TARGET",
                                        optional: true,

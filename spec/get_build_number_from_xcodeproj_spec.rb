@@ -20,6 +20,20 @@ describe Fastlane::Actions::GetBuildNumberFromXcodeprojAction do
       expect(Fastlane::Actions.lane_context[Fastlane::Actions::SharedValues::BUILD_NUMBER]).to eq("1")
     end
 
+    it "should return build number from xcproj" do
+      result = Fastlane::FastFile.new.parse("lane :test do
+        get_build_number_from_xcodeproj(json_format: true)
+      end").runner.execute(:test)
+      expect(result).to eq("1")
+    end
+
+    it "should set BUILD_NUMBER shared value with json_format: true" do
+      Fastlane::FastFile.new.parse("lane :test do
+        get_build_number_from_xcodeproj(json_format: true)
+      end").runner.execute(:test)
+      expect(Fastlane::Actions.lane_context[Fastlane::Actions::SharedValues::BUILD_NUMBER]).to eq("1")
+    end
+
     after do
       cleanup_fixtures
     end

@@ -18,6 +18,7 @@ describe Fastlane::Actions::GetInfoPlistPathAction do
       # Action parameters
       let (:xcodeproj) { File.join(xcodeproj_test_path, proj_file) }
       let (:target) { "bundle" }
+      let (:json_xcodeproj) { File.join(xcodeproj_test_path, "bundle_xcproj.xcodeproj") }
 
       it "should return Info.plist path with explicitly provided xcodeproj and target" do
         result = Fastlane::FastFile.new.parse("lane :test do
@@ -53,6 +54,55 @@ describe Fastlane::Actions::GetInfoPlistPathAction do
         end").runner.execute(:test)
         expect(result).to eq(File.join(xcodeproj_test_path, "bundle/Info.plist"))
       end
+
+      it "should return Info.plist path with explicitly provided xcodeproj and target with json_format: true" do
+        result = Fastlane::FastFile.new.parse("lane :test do
+          get_info_plist_path ({
+            xcodeproj: '#{json_xcodeproj}',
+            target: '#{target}',
+            json_format: true
+          })
+        end").runner.execute(:test)
+        expect(result).to eq(File.join(xcodeproj_test_path, "bundle/Info.plist"))
+      end
+
+      it "should detect xcodeproj in the root directory and return Info.plist path for explicitly provided target with json_format: true" do
+        result = Fastlane::FastFile.new.parse("lane :test do
+          get_info_plist_path ({
+            target: '#{target}',
+            json_format: true
+          })
+        end").runner.execute(:test)
+        expect(result).to eq(File.join(xcodeproj_test_path, "bundle/Info.plist"))
+      end
+
+      it "should detect target and return its Info.plist path for explicitly provided xcodeproj with json_format: true" do
+        result = Fastlane::FastFile.new.parse("lane :test do
+          get_info_plist_path ({
+            xcodeproj: '#{json_xcodeproj}',
+            json_format: true
+          })
+        end").runner.execute(:test)
+        expect(result).to eq(File.join(xcodeproj_test_path, "bundle/Info.plist"))
+      end
+
+      it "should detect xcodeproj in the root directory and target and return its Info.plist path with json_format: true" do
+        result = Fastlane::FastFile.new.parse("lane :test do
+          get_info_plist_path(json_format: true)
+        end").runner.execute(:test)
+        expect(result).to eq(File.join(xcodeproj_test_path, "bundle/Info.plist"))
+      end
+
+      it "should return Info.plist path for explicitly provided scheme with json_format: true" do
+        result = Fastlane::FastFile.new.parse("lane :test do
+          get_info_plist_path ({
+            xcodeproj: '#{json_xcodeproj}',
+            scheme: 'bundle',
+            json_format: true
+          })
+        end").runner.execute(:test)
+        expect(result).to eq(File.join(xcodeproj_test_path, "bundle/Info.plist"))
+      end
     end
 
     describe "for targets with different Info.plist paths for all build configurations" do
@@ -65,6 +115,7 @@ describe Fastlane::Actions::GetInfoPlistPathAction do
       # Action parameters
       let (:xcodeproj) { File.join(xcodeproj_test_path, proj_file) }
       let (:target) { "get_info_plist_path" }
+      let (:json_xcodeproj) { File.join(xcodeproj_test_path, "get_info_plist_path_xcproj.xcodeproj") }
 
       it "should return its Info.plist path" do
         result = Fastlane::FastFile.new.parse("lane :test do
@@ -85,6 +136,20 @@ describe Fastlane::Actions::GetInfoPlistPathAction do
           })
         end").runner.execute(:test)
         expect(result).to eq(File.join(xcodeproj_test_path, "get_info_plist_path/Info_Release.plist"))
+      end
+
+      it "should return its Info.plist path with json_format: true" do
+        %w(Debug Release).each do |configuration|
+          result = Fastlane::FastFile.new.parse("lane :test do
+            get_info_plist_path ({
+              xcodeproj: '#{json_xcodeproj}',
+              target: '#{target}',
+              build_configuration_name: '#{configuration}',
+              json_format: true
+            })
+          end").runner.execute(:test)
+          expect(result).to eq(File.join(xcodeproj_test_path, "get_info_plist_path/Info_#{configuration}.plist"))
+        end
       end
     end
 

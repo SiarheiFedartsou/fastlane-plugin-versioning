@@ -73,6 +73,11 @@ module Fastlane
                                UI.user_error!("Please pass the path to the project, not the workspace") if value.end_with? ".xcworkspace"
                                UI.user_error!("Could not find Xcode project at path '#{File.expand_path(value)}'") if !File.exist?(value) and !Helper.is_test?
                              end),
+          FastlaneCore::ConfigItem.new(key: :json_format,
+                                       env_name: "FL_APPSTORE_VERSION_NUMBER_JSON_FORMAT",
+                                       description: "Use the JSON based project.xcproj of the Xcode project instead of its project.pbxproj",
+                                       type: Boolean,
+                                       default_value: false),
           FastlaneCore::ConfigItem.new(key: :target,
                              env_name: "FL_VERSION_NUMBER_TARGET",
                              optional: true,
