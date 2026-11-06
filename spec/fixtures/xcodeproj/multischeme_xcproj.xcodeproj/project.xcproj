@@ -1,0 +1,59 @@
+{
+  "organization": "fastlane",
+  "default-configuration": "ReleaseB",
+  "configurations": [ "DebugA", "ReleaseA", "DebugB", "ReleaseB" ],
+  "localizations": {
+    "development": "en",
+    "supported": [ "Base", "en" ],
+  },
+  "files": [
+    {
+      "kind": "group",
+      "path": "multischeme",
+      "children": [
+        { "path": "AppDelegate.swift" },
+        { "path": "Info.plist" },
+      ],
+    },
+    {
+      "kind": "group",
+      "name": "Products",
+      "children": [
+        { "path": "multischeme.app", "base": "build-products" },
+      ],
+    },
+  ],
+  "targets": [
+    {
+      "name": "multischeme",
+      "id": "8E4C7A0B1F3D2C5600A1B2C3",
+      "product": "Products/multischeme.app",
+      "product-type": "application",
+      "build-phases": [
+        { "kind": "sources" },
+        { "kind": "frameworks" },
+        { "kind": "resources" },
+      ],
+      "build-settings": {
+        "ASSETCATALOG_COMPILER_APPICON_NAME": "AppIcon",
+        "CURRENT_PROJECT_VERSION[config=DebugA]": "1",
+        "CURRENT_PROJECT_VERSION[config=ReleaseA]": "1",
+        "CURRENT_PROJECT_VERSION[config=DebugB]": "4",
+        "CURRENT_PROJECT_VERSION[config=ReleaseB]": "4",
+        "INFOPLIST_FILE": "multischeme/Info.plist",
+        "MARKETING_VERSION[config=DebugA]": "1.1.0",
+        "MARKETING_VERSION[config=ReleaseA]": "1.1.0",
+        "MARKETING_VERSION[config=DebugB]": "1.3.0",
+        "MARKETING_VERSION[config=ReleaseB]": "1.3.0",
+        "PRODUCT_BUNDLE_IDENTIFIER": "com.fastlane-plugin-versioning.multischeme",
+      },
+    },
+  ],
+  "build-settings": {
+    "ALWAYS_SEARCH_USER_PATHS": "NO",
+    "CLANG_ENABLE_MODULES": "YES",
+    "SDKROOT": "iphoneos",
+    "SWIFT_VERSION": "5.0",
+  },
+  "last-upgrade": "26.0",
+}

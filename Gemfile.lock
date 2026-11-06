@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    fastlane-plugin-versioning (0.7.1)
+    fastlane-plugin-versioning (0.8.0)
 
 GEM
   remote: https://rubygems.org/
@@ -10,6 +10,7 @@ GEM
       base64
       nkf
       rexml
+    abbrev (0.1.2)
     addressable (2.8.7)
       public_suffix (>= 2.0.2, < 7.0)
     artifactory (3.0.17)
@@ -50,7 +51,7 @@ GEM
     dotenv (2.8.1)
     emoji_regex (3.2.3)
     excon (0.112.0)
-    faraday (1.10.4)
+    faraday (1.10.6)
       faraday-em_http (~> 1.0)
       faraday-em_synchrony (~> 1.0)
       faraday-excon (~> 1.1)
@@ -69,13 +70,13 @@ GEM
     faraday-em_synchrony (1.0.0)
     faraday-excon (1.1.0)
     faraday-httpclient (1.0.1)
-    faraday-multipart (1.0.4)
-      multipart-post (~> 2)
+    faraday-multipart (1.2.0)
+      multipart-post (~> 2.0)
     faraday-net_http (1.0.2)
     faraday-net_http_persistent (1.2.0)
     faraday-patron (1.0.0)
     faraday-rack (1.0.0)
-    faraday-retry (1.0.3)
+    faraday-retry (1.0.4)
     faraday_middleware (1.2.1)
       faraday (~> 1.0)
     fastimage (2.3.1)
@@ -169,16 +170,19 @@ GEM
     json (2.9.0)
     jwt (2.9.3)
       base64
+    logger (1.7.0)
     method_source (1.1.0)
     mini_magick (4.13.2)
     mini_mime (1.1.5)
     multi_json (1.15.0)
     multipart-post (2.4.1)
+    mutex_m (0.3.0)
     nanaimo (0.4.0)
     naturally (2.2.1)
     nkf (0.2.0)
     optparse (0.6.0)
     os (1.1.4)
+    ostruct (0.6.3)
     plist (3.7.1)
     pry (0.15.2)
       coderay (~> 1.1)
@@ -248,9 +252,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  abbrev
   bundler
   fastlane (>= 1.93.1)
   fastlane-plugin-versioning!
+  logger
+  mutex_m
+  ostruct
   pry
   rake
   rspec

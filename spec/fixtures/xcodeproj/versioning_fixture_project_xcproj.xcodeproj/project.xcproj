@@ -1,0 +1,53 @@
+{
+  "organization": "fastlane",
+  "default-configuration": "Release",
+  "configurations": [ "Debug", "Release" ],
+  "localizations": {
+    "development": "en",
+    "supported": [ "Base", "en" ],
+  },
+  "files": [
+    {
+      "kind": "group",
+      "path": "versioning_fixture_project",
+      "children": [
+        { "path": "AppDelegate.swift" },
+        { "path": "New-Info.plist" },
+      ],
+    },
+    {
+      "kind": "group",
+      "name": "Products",
+      "children": [
+        { "path": "versioning_fixture_project.app", "base": "build-products" },
+      ],
+    },
+  ],
+  "targets": [
+    {
+      "name": "versioning_fixture_project",
+      "id": "8E4C7A0B1F3D2C5600A1B2C3",
+      "product": "Products/versioning_fixture_project.app",
+      "product-type": "application",
+      "build-phases": [
+        { "kind": "sources" },
+        { "kind": "frameworks" },
+        { "kind": "resources" },
+      ],
+      "build-settings": {
+        "ASSETCATALOG_COMPILER_APPICON_NAME": "AppIcon",
+        "INFOPLIST_FILE": "versioning_fixture_project/New-Info.plist",
+        "CURRENT_PROJECT_VERSION": "1",
+        "MARKETING_VERSION": "0.0.1",
+        "PRODUCT_BUNDLE_IDENTIFIER": "com.fastlane.community.action.versioning.versioning_fixture_project",
+      },
+    },
+  ],
+  "build-settings": {
+    "ALWAYS_SEARCH_USER_PATHS": "NO",
+    "CLANG_ENABLE_MODULES": "YES",
+    "SDKROOT": "iphoneos",
+    "SWIFT_VERSION": "5.0",
+  },
+  "last-upgrade": "26.0",
+}
