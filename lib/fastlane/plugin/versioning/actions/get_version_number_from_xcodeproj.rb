@@ -7,8 +7,11 @@ module Fastlane
       def self.run(params)
         unless params[:xcodeproj]
           if Helper.test?
-            params[:xcodeproj] = "/tmp/fastlane/tests/fastlane/xcodeproj/versioning_fixture_project.xcodeproj"
-            params[:xcodeproj] = "/tmp/fastlane/tests/fastlane/xcodeproj/versioning_fixture_project_xcproj.xcodeproj" if Helper::Xcproj.enabled?(params)
+            if Helper::Xcproj.enabled?(params)
+              params[:xcodeproj] = "/tmp/fastlane/tests/fastlane/xcodeproj/versioning_fixture_project_xcproj.xcodeproj"
+            else
+              params[:xcodeproj] = "/tmp/fastlane/tests/fastlane/xcodeproj/versioning_fixture_project.xcodeproj"
+            end
           else
             params[:xcodeproj] = Dir["*.xcodeproj"][0] unless params[:xcodeproj]
           end

@@ -21,6 +21,13 @@ describe Fastlane::Actions::GetAppStoreVersionNumberAction do
       expect(result).to eq("2.6.2")
     end
 
+    it "should get bundle identifier from Info.plist with json_format: true" do
+      result = Fastlane::FastFile.new.parse("lane :test do
+        get_app_store_version_number(json_format: true)
+      end").runner.execute(:test)
+      expect(result).to eq("2.6.2")
+    end
+
     it "should raise error if app with provided bundle id does not exists" do
       error_msg = "Cannot find app with com.some.nonexistent.app bundle ID in the App Store"
       expect do

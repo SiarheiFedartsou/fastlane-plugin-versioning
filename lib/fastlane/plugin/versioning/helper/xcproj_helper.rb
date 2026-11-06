@@ -1,4 +1,5 @@
 require 'json'
+require 'pathname'
 require 'strscan'
 
 module Fastlane
@@ -153,7 +154,7 @@ module Fastlane
         end
 
         def path
-          @doc.path
+          Pathname.new(File.dirname(@doc.path))
         end
 
         def targets

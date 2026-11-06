@@ -264,7 +264,7 @@ version = get_version_number_from_xcodeproj(xcodeproj: 'Project.xcodeproj', # op
 
 ### JSON based `project.xcproj` projects
 
-Newer Xcode projects can store the project in the JSON based [`project.xcproj` format](https://github.com/apple/xcode-project-format) (`MyApp.xcodeproj/project.xcproj`) instead of `project.pbxproj.`
+Xcode 27.2+ projects can store the project in the JSON based [`project.xcproj` format](https://github.com/apple/xcode-project-format) (`MyApp.xcodeproj/project.xcproj`) instead of `project.pbxproj.`
 Pass `json_format: true` to use the `project.xcproj` of the same `.xcodeproj`.
 
 ```ruby

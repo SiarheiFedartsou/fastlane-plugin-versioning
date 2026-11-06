@@ -1,0 +1,32 @@
+{
+  "default-configuration": "Release",
+  "configurations": [ "Debug", "Release" ],
+  "localizations": {
+    "development": "en",
+  },
+  "files": [
+    {
+      "kind": "group",
+      "path": "get_info_plist_path",
+      "children": [
+        { "path": "Info_Debug.plist" },
+        { "path": "Info_Release.plist" },
+      ],
+    },
+  ],
+  "targets": [
+    {
+      "name": "get_info_plist_path",
+      "id": "8E4C7A0B1F3D2C5600A1B2D2",
+      "product-type": "application",
+      "build-settings": {
+        "INFOPLIST_FILE[config=Debug]": "get_info_plist_path/Info_Debug.plist",
+        "INFOPLIST_FILE[config=Release]": "get_info_plist_path/Info_Release.plist",
+        "PRODUCT_BUNDLE_IDENTIFIER": "Home.get-info-plist-path",
+      },
+    },
+  ],
+  "build-settings": {
+    "SDKROOT": "iphoneos",
+  },
+}
